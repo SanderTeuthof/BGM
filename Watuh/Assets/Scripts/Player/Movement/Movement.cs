@@ -166,7 +166,7 @@ public class Movement : MonoBehaviour
 
     private void ExecuteMovement()
     {
-        Debug.Log(_momentum);
+        //Debug.Log(_momentum);
         _controller.Move(_movement * Time.deltaTime * _momentum);
         _movement = Vector3.zero;
     }

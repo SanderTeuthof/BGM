@@ -139,9 +139,9 @@ CharacterController:
   serializedVersion: 3
   m_Height: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.1
-  m_SkinWidth: 0.08
+  m_SlopeLimit: 60
+  m_StepOffset: 0.2
+  m_SkinWidth: 0.1
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &5070742486139620722
@@ -157,12 +157,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxWalkSpeed: 10
-  _maxSpeed: 30
+  _maxSpeed: 35
   _speedBuildup: 10
   _breakTime: 0.3
   _fallMomentumBuild: 0.1
   _dashMomentumMultiplier: 2
-  _dashMomentumTakeOver: 0.061
+  _dashMomentumTakeOver: 0.137
   _dashTime: 0.6
   _moveInput: {fileID: 2058153161468133996, guid: 59992708048129a4b9265620bfb22326,
     type: 3}
@@ -170,7 +170,7 @@ MonoBehaviour:
     type: 3}
   _camera: {fileID: 5956869494774346414}
   _rotationSpeed: 30
-  _jumpPower: 30
+  _jumpPower: 50
   _gravityMultiplier: 0.2
   _momentum: 0
 --- !u!1 &3653488075694939084
@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 5956869494774346414}
   - component: {fileID: 981179037444571430}
   - component: {fileID: 786074972485741543}
+  - component: {fileID: 582033657594089229}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: Untagged
@@ -264,6 +265,25 @@ MonoBehaviour:
   _maxVerticalRotation: 60
   _lookInput: {fileID: 6589624298435245374, guid: 59992708048129a4b9265620bfb22326,
     type: 3}
+--- !u!114 &582033657594089229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3653488075694939084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf457d8e76a1784d82c35b68530efda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 981179037444571430}
+  _playerMovement: {fileID: 5070742486139620722}
+  _minFOV: 60
+  _maxFOV: 110
+  _minMomentum: 10
+  _maxMomentum: 50
+  _fovLerpSpeed: 5
 --- !u!1 &6429350930511727312
 GameObject:
   m_ObjectHideFlags: 0
