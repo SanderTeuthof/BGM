@@ -832,36 +832,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5070742486139620722, guid: 0c3cca2209d92d5458a19c7b1109a44e,
-        type: 3}
-      propertyPath: _maxSpeed
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5070742486139620722, guid: 0c3cca2209d92d5458a19c7b1109a44e,
-        type: 3}
-      propertyPath: _jumpPower
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5070742486139620722, guid: 0c3cca2209d92d5458a19c7b1109a44e,
-        type: 3}
-      propertyPath: _maxWalkSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5070742486139620722, guid: 0c3cca2209d92d5458a19c7b1109a44e,
-        type: 3}
-      propertyPath: _fallMomentumBuild
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5070742486139620722, guid: 0c3cca2209d92d5458a19c7b1109a44e,
-        type: 3}
-      propertyPath: _dashMomentumTakeOver
-      value: 0.061
-      objectReference: {fileID: 0}
-    - target: {fileID: 5070742486139620722, guid: 0c3cca2209d92d5458a19c7b1109a44e,
-        type: 3}
-      propertyPath: _dashMomentumMultiplier
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

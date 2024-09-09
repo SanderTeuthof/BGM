@@ -156,13 +156,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e57fae603314de844b64d85247fa282f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxWalkSpeed: 15
-  _maxSpeed: 50
+  _maxWalkSpeed: 10
+  _maxSpeed: 30
   _speedBuildup: 10
   _breakTime: 0.3
-  _fallMomentumBuild: 0.3
-  _dashMomentumMultiplier: 4
-  _dashMomentumTakeOver: 0.119
+  _fallMomentumBuild: 0.1
+  _dashMomentumMultiplier: 2
+  _dashMomentumTakeOver: 0.061
   _dashTime: 0.6
   _moveInput: {fileID: 2058153161468133996, guid: 59992708048129a4b9265620bfb22326,
     type: 3}
@@ -170,6 +170,7 @@ MonoBehaviour:
     type: 3}
   _camera: {fileID: 5956869494774346414}
   _rotationSpeed: 30
+  _jumpPower: 30
   _gravityMultiplier: 0.2
   _momentum: 0
 --- !u!1 &3653488075694939084
