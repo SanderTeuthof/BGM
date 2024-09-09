@@ -42,7 +42,7 @@ public class Movement : MonoBehaviour
     private bool _fallingValue = false;
 
     [HideInInspector]
-    public float _momentum = 0;
+    public float Momentum = 0;
 
     private bool _falling
     {
@@ -141,7 +141,7 @@ public class Movement : MonoBehaviour
         }
 
         _movement.y = _velocityY * Time.deltaTime;
-        _momentum += _fallMomentumBuild * _fallTime;
+        Momentum += _fallMomentumBuild * _fallTime;
     }
 
     private void CalculateMomentum()
@@ -149,25 +149,25 @@ public class Movement : MonoBehaviour
         if (_dashing)
             return;
 
-        _momentum = MathF.Min(_momentum, MathF.Min(_maxSpeed, _controller.velocity.magnitude));
+        Momentum = MathF.Min(Momentum, MathF.Min(_maxSpeed, _controller.velocity.magnitude));
 
         float input = _moveInput.action.ReadValue<Vector2>().magnitude;
 
         if (input > 0.1f)
         {
-            _momentum = Mathf.Max(_momentum, MathF.Min(_momentum + input * _speedBuildup * Time.deltaTime, _maxWalkSpeed));
+            Momentum = Mathf.Max(Momentum, MathF.Min(Momentum + input * _speedBuildup * Time.deltaTime, _maxWalkSpeed));
             return;
         }
-        if (_momentum > 0f)
+        if (Momentum > 0f)
         {
-            _momentum = MathF.Max(Mathf.Min(_momentum - _maxWalkSpeed * (1/_breakTime) * Time.deltaTime, _momentum - _momentum * (1 / _breakTime) * Time.deltaTime), 0f);
+            Momentum = MathF.Max(Mathf.Min(Momentum - _maxWalkSpeed * (1/_breakTime) * Time.deltaTime, Momentum - Momentum * (1 / _breakTime) * Time.deltaTime), 0f);
         }
     }
 
     private void ExecuteMovement()
     {
-        Debug.Log(_momentum);
-        _controller.Move(_movement * Time.deltaTime * _momentum);
+        Debug.Log(Momentum);
+        _controller.Move(_movement * Time.deltaTime * Momentum);
         _movement = Vector3.zero;
     }
 
@@ -220,10 +220,10 @@ public class Movement : MonoBehaviour
     private IEnumerator StartDashing()
     {
         _dashing = true;
-        float targetMomentum = _momentum * _dashMomentumMultiplier;
-        float momentumAfterDash = Mathf.Lerp(_momentum, targetMomentum, _dashMomentumTakeOver);
+        float targetMomentum = Momentum * _dashMomentumMultiplier;
+        float momentumAfterDash = Mathf.Lerp(Momentum, targetMomentum, _dashMomentumTakeOver);
         
-        _momentum = targetMomentum;
+        Momentum = targetMomentum;
 
         float time = 0;
         while (time < _dashTime)
@@ -236,7 +236,7 @@ public class Movement : MonoBehaviour
             yield return null;
         }
 
-        _momentum = momentumAfterDash;
+        Momentum = momentumAfterDash;
 
         _dashing = false;
     }
