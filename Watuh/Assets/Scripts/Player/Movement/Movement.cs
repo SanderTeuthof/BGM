@@ -155,12 +155,12 @@ public class Movement : MonoBehaviour
 
         if (input > 0.1f)
         {
-            _momentum = Mathf.Max(_momentum, MathF.Min(_momentum + input * _speedBuildup * Time.deltaTime, _maxWalkSpeed));
+            _momentum = MathF.Max(_momentum, MathF.Min(_momentum + input * _speedBuildup * Time.deltaTime, _maxWalkSpeed));
             return;
         }
         if (_momentum > 0f)
         {
-            _momentum = MathF.Max(Mathf.Min(_momentum - _maxWalkSpeed * (1/_breakTime) * Time.deltaTime, _momentum - _momentum * (1 / _breakTime) * Time.deltaTime), 0f);
+            _momentum = MathF.Max(MathF.Min(_momentum - _maxWalkSpeed * (1/_breakTime) * Time.deltaTime, _momentum - _momentum * (1 / _breakTime) * Time.deltaTime), 0f);
         }
     }
 

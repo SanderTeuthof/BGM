@@ -400,6 +400,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e57fae603314de844b64d85247fa282f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1511830513 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3653488075694939084, guid: 0c3cca2209d92d5458a19c7b1109a44e,
+    type: 3}
+  m_PrefabInstance: {fileID: 9080380076351346520}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1511830515 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 981179037444571430, guid: 0c3cca2209d92d5458a19c7b1109a44e,
+    type: 3}
+  m_PrefabInstance: {fileID: 9080380076351346520}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511830513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1511830517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511830513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf457d8e76a1784d82c35b68530efda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 1511830515}
+  _playerMovement: {fileID: 891306154}
+  _minFOV: 60
+  _maxFOV: 110
+  _minMomentum: 10
+  _maxMomentum: 50
+  _fovLerpSpeed: 5
 --- !u!1 &1544130646
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,7 +872,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3653488075694939084, guid: 0c3cca2209d92d5458a19c7b1109a44e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1511830517}
   m_SourcePrefab: {fileID: 100100000, guid: 0c3cca2209d92d5458a19c7b1109a44e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
