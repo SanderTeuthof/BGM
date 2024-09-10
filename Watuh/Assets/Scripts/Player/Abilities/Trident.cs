@@ -40,8 +40,9 @@ public class Trident : MonoBehaviour
         _rb.velocity = Vector3.zero;
         _canTeleport = true;
     }
-    public void Stab()
+    public void Stab(InputAction.CallbackContext ctx)
     {
+        if (!ctx.performed) return;
         if (_isTrown) return;
     }
 
