@@ -31,7 +31,7 @@ public class CameraFOVLerp : MonoBehaviour
     {
         while (true)
         {
-            float currentMomentum = _playerMovement._momentum;
+            float currentMomentum = _playerMovement.Momentum;
 
             float normalizedMomentum = Mathf.Clamp01((currentMomentum - _minMomentum) / (_maxMomentum - _minMomentum));
 
