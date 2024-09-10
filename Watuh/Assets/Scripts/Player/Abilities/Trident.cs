@@ -13,6 +13,7 @@ public class Trident : MonoBehaviour
 
     [SerializeField] private float _trowStrength;
     [SerializeField] private float _stabLength;
+    [SerializeField] private float _retrievSpeed;
     [SerializeField] private int _teleportLayer;
 
     private GameObject _player;
@@ -34,8 +35,8 @@ public class Trident : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer != _teleportLayer) return;
         _rb.isKinematic = true;
+        if (other.gameObject.layer != _teleportLayer) return;
         _rb.velocity = Vector3.zero;
         _canTeleport = true;
     }
@@ -52,11 +53,12 @@ public class Trident : MonoBehaviour
             Teleport();
             return;
         }
-        if (_isTrown && _didTeleport && !_canTeleport)
+        if (_isTrown && _didTeleport && !_canTeleport || _isTrown)
         {
             RetrieveTrident();
             return;
         }
+        _rb.isKinematic = false;
         transform.parent = null;
         _rb.AddForce(transform.forward * (_trowStrength + _playerMomentum));
         _isTrown = true;
@@ -76,16 +78,32 @@ public class Trident : MonoBehaviour
     {
         float timer = 0;
         _rb.isKinematic = false;
-        transform.parent = _tridentHolder;
-        while (Vector3.Distance(transform.localPosition, Vector3.zero) >= 0.001f)
-        {
-            timer += 0.2f * Time.deltaTime;
-            transform.localPosition = Vector3.Lerp(Vector3.zero, transform.localPosition, timer);
-        }
+        transform.parent = _tridentHolder.transform;
+        Task retrieveTrident = new Task(LerpToPos(transform.localPosition, Vector3.zero, this.gameObject, true));
+        retrieveTrident.Finished += RetrieveTrident_Finished;
+        retrieveTrident.Start();
+    }
+
+    private void RetrieveTrident_Finished(bool manual)
+    {
+        transform.rotation = new Quaternion(0, 0, 0, 0);
+        transform.localPosition = Vector3.zero;
         _rb.isKinematic = true;
-        _rb.velocity = Vector3.zero;
-        transform.Rotate(Vector3.zero);
         _didTeleport = false;
+        _canTeleport = false;
         _isTrown = false;
+    }
+
+    private IEnumerator LerpToPos(Vector3 startpos, Vector3 toPos, GameObject MoveObject, bool moveLocal)
+    {
+        float time = 0;
+        while (time < _retrievSpeed - 2f)
+        {
+            time += Time.deltaTime;
+            Vector3 newPos = Vector3.Lerp(startpos, toPos, time);
+            if(moveLocal) MoveObject.transform.localPosition = newPos;
+            else MoveObject.transform.position = newPos;
+            yield return null;
+        }
     }
 }
