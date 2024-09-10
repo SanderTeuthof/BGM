@@ -729,9 +729,9 @@ MonoBehaviour:
     m_ActionName: Player/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1578911052}
-        m_TargetAssemblyTypeName: Movement, Assembly-CSharp
-        m_MethodName: StartDash
+      - m_Target: {fileID: 1574727602}
+        m_TargetAssemblyTypeName: Trident, Assembly-CSharp
+        m_MethodName: Stab
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -804,7 +804,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1574727602}
         m_TargetAssemblyTypeName: Trident, Assembly-CSharp
         m_MethodName: Stab
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1307,7 +1307,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -1323,11 +1323,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418c85c1bbe09904998a9d02f8c18784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _momentumMultiplier: 1.5
   _cameraTransform: {fileID: 2002654031}
   _tridentHolder: {fileID: 1905398514}
-  _trowStrength: 200
+  _momentumMultiplier: 1.5
+  _trowStrength: 800
   _stabLength: 2
+  _retrievSpeed: 4
   _teleportLayer: 3
 --- !u!65 &1574727603
 BoxCollider:

@@ -250,9 +250,9 @@ public class Movement : MonoBehaviour
         _fallTime = 0f;
     }
 
-    public void StartDash(InputAction.CallbackContext ctx)
+    public void StartDash()
     {
-        if (!ctx.performed || _dashing)
+        if (_dashing)
             return;
 
         StartCoroutine(StartDashing());

@@ -6,15 +6,17 @@ using UnityEngine.InputSystem;
 
 public class Trident : MonoBehaviour
 {
-    [SerializeField] private float _momentumMultiplier;
-
+    [Header("Transforms")]
     [SerializeField] private Transform _cameraTransform;
     [SerializeField] private Transform _tridentHolder;
 
+    [Header("Stats")]
+    [SerializeField] private float _momentumMultiplier;
     [SerializeField] private float _trowStrength;
     [SerializeField] private float _stabLength;
     [SerializeField] private float _retrievSpeed;
     [SerializeField] private int _teleportLayer;
+    [SerializeField] private float _dashCooldown;
 
     private GameObject _player;
     private float _playerMomentum;
@@ -23,6 +25,9 @@ public class Trident : MonoBehaviour
     private bool _isTrown;
     private bool _didTeleport;
     private bool _canTeleport;
+    private bool _canDash = true;
+
+    private Task _taskManager;
 
     private void Start()
     {
@@ -43,7 +48,15 @@ public class Trident : MonoBehaviour
     public void Stab(InputAction.CallbackContext ctx)
     {
         if (!ctx.performed) return;
-        if (_isTrown) return;
+        if (_isTrown || !_canDash) return;
+        if (_taskManager == null || !_taskManager.Running)
+        {
+            _canDash = false;
+            _player.GetComponent<Movement>().StartDash();
+            //_taskManager = new Task(DoStabCoolDown(_dashCooldown));
+            //_taskManager.Start();
+            StartCoroutine(DoStabCoolDown(_dashCooldown));
+        }
     }
 
     public void Trow(InputAction.CallbackContext ctx)
@@ -80,9 +93,12 @@ public class Trident : MonoBehaviour
         float timer = 0;
         _rb.isKinematic = false;
         transform.parent = _tridentHolder.transform;
-        Task retrieveTrident = new Task(LerpToPos(transform.localPosition, Vector3.zero, this.gameObject, true));
-        retrieveTrident.Finished += RetrieveTrident_Finished;
-        retrieveTrident.Start();
+        if (_taskManager == null || !_taskManager.Running)
+        {
+            _taskManager = new Task(LerpToPos(transform.localPosition, Vector3.zero, this.gameObject, true));
+            _taskManager.Finished += RetrieveTrident_Finished;
+            _taskManager.Start();
+        }
     }
 
     private void RetrieveTrident_Finished(bool manual)
@@ -93,6 +109,7 @@ public class Trident : MonoBehaviour
         _didTeleport = false;
         _canTeleport = false;
         _isTrown = false;
+        _taskManager.Finished -= RetrieveTrident_Finished;
     }
 
     private IEnumerator LerpToPos(Vector3 startpos, Vector3 toPos, GameObject MoveObject, bool moveLocal)
@@ -106,5 +123,11 @@ public class Trident : MonoBehaviour
             else MoveObject.transform.position = newPos;
             yield return null;
         }
+    }
+
+    private IEnumerator DoStabCoolDown(float timer)
+    {
+        yield return new WaitForSeconds(timer);
+        _canDash = true;
     }
 }
