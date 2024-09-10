@@ -163,7 +163,7 @@ MonoBehaviour:
   _dashMomentumMultiplier: 1.5
   _dashMomentumTakeOver: 0.768
   _dashTime: 0.3
-  _fallMomentumBuild: 0.04
+  _fallMomentumBuild: 0.06
   _minFallTime: 0.3
   _maxFallTime: 8
   _fallingSpeedMulti: 2
@@ -182,7 +182,6 @@ MonoBehaviour:
     type: 3}
   _camera: {fileID: 5956869494774346414}
   _rotationSpeed: 30
-  _jumped: 0
   Momentum: 0
 --- !u!1 &3653488075694939084
 GameObject:

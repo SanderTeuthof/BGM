@@ -44,6 +44,7 @@ public class Movement : MonoBehaviour
     private float _groundCheckDistance = 0.1f;
     [SerializeField]
     private float _fallTimeMulti = 1f;
+    private float _buildGravityMult = 2.7f;
 
     [Header("Jump Settings")]
     [SerializeField]
@@ -104,6 +105,9 @@ public class Movement : MonoBehaviour
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
+        #if !UNITY_EDITOR
+                    _gravityMultiplier *= _buildGravityMult; 
+        #endif
     }
 
     private void Update()
