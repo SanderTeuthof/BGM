@@ -103,6 +103,8 @@ GameObject:
   - component: {fileID: 788452208865610518}
   - component: {fileID: 5866798858912426618}
   - component: {fileID: 107627723762693082}
+  - component: {fileID: 6760249221974709907}
+  - component: {fileID: 676317230804029991}
   m_Layer: 0
   m_Name: EnemyFlying
   m_TagString: Untagged
@@ -267,15 +269,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aa4de39540b3074b89629d88464c981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weight: 1
+  _weight: 2
   _animationNames:
   - Idle
   - Shoot
+  _minDistance: 5
+  _maxDistance: 30
   _thingToShoot: {fileID: 2661272210798307478, guid: 66efaea7033e65d419f6e5e8ed06abf5,
     type: 3}
   _rotationSpeed: 15
   _timeBeforeShoot: 0.5
   _timeShootAnimation: 0.5
+--- !u!114 &6760249221974709907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6320512234334720457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 549a07965ea3095408d8dc335b3293a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weight: 1
+  _animationNames: []
+  _minimumDistance: 0
+  _maximumDistance: 10
+  _flySpeed: 8
+  _rotationSpeed: 5
+--- !u!114 &676317230804029991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6320512234334720457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f4b34becd29954fb8d8d306dec6453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weight: 1
+  _animationNames: []
+  _minimumDistance: 25
+  _maximumDistance: 100
+  _flySpeed: 8
+  _rotationSpeed: 5
 --- !u!1 &7710591185462323087
 GameObject:
   m_ObjectHideFlags: 0
