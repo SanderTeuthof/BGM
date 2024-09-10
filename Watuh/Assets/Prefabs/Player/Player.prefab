@@ -158,20 +158,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxWalkSpeed: 10
   _maxSpeed: 35
-  _speedBuildup: 10
-  _breakTime: 0.3
-  _fallMomentumBuild: 0.1
-  _dashMomentumMultiplier: 2
-  _dashMomentumTakeOver: 0.137
-  _dashTime: 0.6
+  _speedBuildup: 35
+  _breakTime: 0.15
+  _dashMomentumMultiplier: 1.5
+  _dashMomentumTakeOver: 0.768
+  _dashTime: 0.3
+  _fallMomentumBuild: 0.04
+  _minFallTime: 0.3
+  _maxFallTime: 8
+  _fallingSpeedMulti: 2
+  _maxFallForce: -300
+  _fallInputEffectiveness: 1
+  _fallTimeInputCutoff: 3
+  _groundCheckDistance: 0.3
+  _fallTimeMulti: 3
+  _jumpPower: 150
+  _gravityMultiplier: 0.9
+  _cayoteTime: 0.3
+  _minJumpMomentum: 5
   _moveInput: {fileID: 2058153161468133996, guid: 59992708048129a4b9265620bfb22326,
     type: 3}
   _rotationInput: {fileID: 6589624298435245374, guid: 59992708048129a4b9265620bfb22326,
     type: 3}
   _camera: {fileID: 5956869494774346414}
   _rotationSpeed: 30
-  _jumpPower: 90
-  _gravityMultiplier: 0.38
+  _jumped: 0
   Momentum: 0
 --- !u!1 &3653488075694939084
 GameObject:
