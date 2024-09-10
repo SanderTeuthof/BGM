@@ -20,7 +20,7 @@ public class SpeedLerp : MonoBehaviour
     {
         while (true)
         {
-            float yScale = Mathf.Lerp(0, 1, _playerMovement.Momentum / _maxSpeed);
+            float yScale = _playerMovement.Momentum / _maxSpeed;
             transform.localScale = new Vector3(transform.localScale.x, yScale, 0);
             yield return null;
         }
