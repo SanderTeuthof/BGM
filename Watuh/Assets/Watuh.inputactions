@@ -198,7 +198,7 @@
                     "id": "c1f7a91b-d0fd-4a62-997e-7fb9b69bf235",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "ScaleVector2(x=8,y=8)",
                     "groups": ";Gamepad",
                     "action": "Look",
                     "isComposite": false,
@@ -239,6 +239,17 @@
                 },
                 {
                     "name": "",
+                    "id": "1f2a8ee4-83f6-45f0-a05e-cfeddfccf06f",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "85f9328c-f4c8-46a1-a817-4342095fca7f",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -250,23 +261,12 @@
                 },
                 {
                     "name": "",
-                    "id": "7c25ca14-40c3-4aa1-9b4a-a68bdfde1f49",
-                    "path": "<Mouse>/rightButton",
+                    "id": "d21b906e-7b81-4db9-9b8c-465b11d19b09",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Trow",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e09c7ba2-2978-4c30-9830-23035c56b478",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Stab",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

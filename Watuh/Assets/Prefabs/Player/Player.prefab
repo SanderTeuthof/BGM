@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3641469875391107961}
   - component: {fileID: 7438884394832493238}
   - component: {fileID: 5589179018702516388}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Visualisation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 3194516954919598331}
   - component: {fileID: 6691324161182808605}
   - component: {fileID: 5070742486139620722}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,21 +158,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxWalkSpeed: 10
   _maxSpeed: 35
-  _speedBuildup: 10
-  _breakTime: 0.3
-  _fallMomentumBuild: 0.1
-  _dashMomentumMultiplier: 2
-  _dashMomentumTakeOver: 0.137
-  _dashTime: 0.6
+  _speedBuildup: 35
+  _breakTime: 0.15
+  _dashMomentumMultiplier: 1.5
+  _dashMomentumTakeOver: 0.768
+  _dashTime: 0.3
+  _fallMomentumBuild: 0.06
+  _minFallTime: 0.3
+  _maxFallTime: 8
+  _fallingSpeedMulti: 2
+  _maxFallForce: -300
+  _fallInputEffectiveness: 1
+  _fallTimeInputCutoff: 3
+  _groundCheckDistance: 0.3
+  _fallTimeMulti: 3
+  _jumpPower: 150
+  _gravityMultiplier: 0.9
+  _cayoteTime: 0.3
+  _minJumpMomentum: 5
   _moveInput: {fileID: 2058153161468133996, guid: 59992708048129a4b9265620bfb22326,
     type: 3}
   _rotationInput: {fileID: 6589624298435245374, guid: 59992708048129a4b9265620bfb22326,
     type: 3}
   _camera: {fileID: 5956869494774346414}
   _rotationSpeed: 30
-  _jumpPower: 50
-  _gravityMultiplier: 0.2
-  _momentum: 0
+  Momentum: 0
 --- !u!1 &3653488075694939084
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +195,7 @@ GameObject:
   - component: {fileID: 981179037444571430}
   - component: {fileID: 786074972485741543}
   - component: {fileID: 582033657594089229}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PlayerCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,7 +306,7 @@ GameObject:
   - component: {fileID: 5035931553448204150}
   - component: {fileID: 1912107717501535823}
   - component: {fileID: 5008503993438090681}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
