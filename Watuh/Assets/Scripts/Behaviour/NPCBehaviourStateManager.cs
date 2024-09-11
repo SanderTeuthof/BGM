@@ -56,5 +56,5 @@ public enum NPCBehaviourStates
     Attack,
     Stagger, 
     Flee,
-
+    GotHit
 }

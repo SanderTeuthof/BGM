@@ -22,7 +22,8 @@ public class Trident : MonoBehaviour
     private float _playerMomentum;
     private Rigidbody _rb;
 
-    private bool _isTrown;
+    [HideInInspector]
+    public bool IsTrown;
     private bool _didTeleport;
     private bool _canTeleport;
     private bool _canDash = true;
@@ -40,7 +41,12 @@ public class Trident : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.layer == 3) return;
         _rb.isKinematic = true;
+        if (other.gameObject.layer == 9)
+        {
+            transform.parent = other.transform;
+        }
         if (other.gameObject.layer != _teleportLayer) return;
         _rb.velocity = Vector3.zero;
         _canTeleport = true;
@@ -48,7 +54,7 @@ public class Trident : MonoBehaviour
     public void Stab(InputAction.CallbackContext ctx)
     {
         if (!ctx.performed) return;
-        if (_isTrown || !_canDash) return;
+        if (IsTrown || !_canDash) return;
         if (_taskManager == null || !_taskManager.Running)
         {
             _canDash = false;
@@ -62,12 +68,12 @@ public class Trident : MonoBehaviour
     public void Trow(InputAction.CallbackContext ctx)
     {
         if (!ctx.performed) return;
-        if (_isTrown && !_didTeleport && _canTeleport)
+        if (IsTrown && !_didTeleport && _canTeleport)
         {
             Teleport();
             return;
         }
-        if (_isTrown && _didTeleport && !_canTeleport || _isTrown)
+        if (IsTrown && _didTeleport && !_canTeleport || IsTrown)
         {
             RetrieveTrident();
             return;
@@ -75,7 +81,7 @@ public class Trident : MonoBehaviour
         _rb.isKinematic = false;
         transform.parent = null;
         _rb.AddForce(transform.forward * (_trowStrength + _playerMomentum));
-        _isTrown = true;
+        IsTrown = true;
 
     }
 
@@ -95,7 +101,7 @@ public class Trident : MonoBehaviour
         transform.parent = _tridentHolder.transform;
         if (_taskManager == null || !_taskManager.Running)
         {
-            _taskManager = new Task(LerpToPos(transform.localPosition, Vector3.zero, this.gameObject, true));
+            _taskManager = new Task(LerpToPos(transform.localPosition, Vector3.zero, this.gameObject, true, _retrievSpeed));
             _taskManager.Finished += RetrieveTrident_Finished;
             _taskManager.Start();
         }
@@ -108,14 +114,14 @@ public class Trident : MonoBehaviour
         _rb.isKinematic = true;
         _didTeleport = false;
         _canTeleport = false;
-        _isTrown = false;
+        IsTrown = false;
         _taskManager.Finished -= RetrieveTrident_Finished;
     }
 
-    private IEnumerator LerpToPos(Vector3 startpos, Vector3 toPos, GameObject MoveObject, bool moveLocal)
+    private IEnumerator LerpToPos(Vector3 startpos, Vector3 toPos, GameObject MoveObject, bool moveLocal, float timer)
     {
         float time = 0;
-        while (time < _retrievSpeed - 2f)
+        while (time < timer - 2f)
         {
             time += Time.deltaTime;
             Vector3 newPos = Vector3.Lerp(startpos, toPos, time);

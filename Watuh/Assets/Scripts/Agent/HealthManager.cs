@@ -13,11 +13,18 @@ public class HealthManager : MonoBehaviour
     private IDestroyable _destroyable;
     private ObjectInfo _objectInfo;
 
+    private NPCBehaviourStateManager _npcBehaviourIdleStatesManager;
+
     private void Awake()
     {
         _health = _maxHealth;
         _destroyable = GetComponent<IDestroyable>();
         _objectInfo = GetComponent<ObjectInfo>();
+    }
+
+    private void Start()
+    {
+        _npcBehaviourIdleStatesManager = GetComponent<NPCBehaviourStateManager>();
     }
 
     public virtual void TakeDamage(float damage)
@@ -39,5 +46,11 @@ public class HealthManager : MonoBehaviour
         {
             _destroyable.Destroy();
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer != 7) return;
+        _npcBehaviourIdleStatesManager.SetNewState(NPCBehaviourStates.GotHit, collision.gameObject);
     }
 }
