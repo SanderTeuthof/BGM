@@ -210,6 +210,18 @@ MonoBehaviour:
   _animationNames: []
   _stabStrength: 50
   _trowstrength: 50
+--- !u!114 &117719765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117719749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 612ae7a45e9d41b48a49257fcdf99888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &263705769
 GameObject:
   m_ObjectHideFlags: 0
@@ -1344,8 +1356,12 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6320512234334720457, guid: 415697cd14992d34f9fdb8bda2428317,
         type: 3}
-      insertIndex: -1
+      insertIndex: 1
       addedObject: {fileID: 117719763}
+    - targetCorrespondingSourceObject: {fileID: 6320512234334720457, guid: 415697cd14992d34f9fdb8bda2428317,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 117719765}
     - targetCorrespondingSourceObject: {fileID: 6320512234334720457, guid: 415697cd14992d34f9fdb8bda2428317,
         type: 3}
       insertIndex: -1
