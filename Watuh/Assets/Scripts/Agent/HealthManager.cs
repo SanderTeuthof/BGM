@@ -15,6 +15,8 @@ public class HealthManager : MonoBehaviour
 
     private NPCBehaviourStateManager _npcBehaviourIdleStatesManager;
 
+    private bool _isHit;
+
     private void Awake()
     {
         _health = _maxHealth;
@@ -29,7 +31,7 @@ public class HealthManager : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
-        CheckDeath();
+        StartCoroutine(IsTridentInside());
     }
 
     public virtual void Heal(float healAmount)
@@ -44,7 +46,15 @@ public class HealthManager : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer != 7) return;
+        if (collision.gameObject.layer != 7 || _isHit) return;
         _npcBehaviourIdleStatesManager.SetNewState(NPCBehaviourStates.GotHit, collision.gameObject);
+        _isHit = true;
+    }
+
+    private IEnumerator IsTridentInside()
+    {
+        yield return new WaitForSeconds(1f);
+        if(GetComponentInChildren<Trident>() != null) StartCoroutine(IsTridentInside());
+        else CheckDeath();
     }
 }

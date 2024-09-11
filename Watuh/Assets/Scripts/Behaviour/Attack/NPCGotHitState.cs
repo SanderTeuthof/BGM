@@ -33,8 +33,6 @@ public class NPCGotHitState : MonoBehaviour, INPCBehaviourState
         }
     }
 
-    private Task _hitTask;
-
     private void Awake()
     {
         _stateManager = GetComponent<NPCBehaviourStateManager>();
@@ -58,23 +56,13 @@ public class NPCGotHitState : MonoBehaviour, INPCBehaviourState
         if (trident.IsTrown)
         {
             toPos = GetDestination(tridentGO, _trowstrength, true);
-            _hitTask = new Task(LerpToPos(transform.position, toPos, this.gameObject, false, _trowstrength / 2));
-            _hitTask.Finished += Task_Finished;
+            StartCoroutine(LerpToPos(transform.position, toPos, this.gameObject, false, _trowstrength / 2));
         }
         else
         {
             toPos = GetDestination(tridentGO, _stabStrength, false);
-            _hitTask = new Task(LerpToPos(transform.position, toPos, this.gameObject, false, _stabStrength / 2));
-            _hitTask.Finished += Task_Finished;
+            StartCoroutine(LerpToPos(transform.position, toPos, this.gameObject, false, _stabStrength / 2));
         }
-
-        _hitTask.Start();
-    }
-
-    private void Task_Finished(bool manual)
-    {
-        GetComponent<HealthManager>().TakeDamage(1);
-        _hitTask.Finished -= Task_Finished;
     }
 
     private Vector3 GetDestination(GameObject hitObject, float power, bool isTrown)
@@ -102,5 +90,6 @@ public class NPCGotHitState : MonoBehaviour, INPCBehaviourState
             else MoveObject.transform.position = newPos;
             yield return null;
         }
+        GetComponent<HealthManager>().TakeDamage(1);
     }
 }

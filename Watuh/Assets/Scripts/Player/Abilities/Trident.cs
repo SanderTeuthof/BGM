@@ -59,8 +59,6 @@ public class Trident : MonoBehaviour
         {
             _canDash = false;
             _player.GetComponent<Movement>().StartDash();
-            //_taskManager = new Task(DoStabCoolDown(_dashCooldown));
-            //_taskManager.Start();
             StartCoroutine(DoStabCoolDown(_dashCooldown));
         }
     }
