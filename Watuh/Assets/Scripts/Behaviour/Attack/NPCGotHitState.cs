@@ -33,6 +33,8 @@ public class NPCGotHitState : MonoBehaviour, INPCBehaviourState
         }
     }
 
+    private Task _hitTask;
+
     private void Awake()
     {
         _stateManager = GetComponent<NPCBehaviourStateManager>();
@@ -55,25 +57,37 @@ public class NPCGotHitState : MonoBehaviour, INPCBehaviourState
         Vector3 toPos;
         if (trident.IsTrown)
         {
-            toPos = GetDestination(tridentGO.transform.position, _trowstrength, true);
-            StartCoroutine(LerpToPos(transform.position, toPos, this.gameObject, false, _trowstrength / 2));
+            toPos = GetDestination(tridentGO, _trowstrength, true);
+            _hitTask = new Task(LerpToPos(transform.position, toPos, this.gameObject, false, _trowstrength / 2));
+            _hitTask.Finished += Task_Finished;
         }
         else
         {
-            toPos = GetDestination(tridentGO.transform.position, _stabStrength, false);
-            StartCoroutine(LerpToPos(transform.position, toPos, this.gameObject, false, _stabStrength / 2));
+            toPos = GetDestination(tridentGO, _stabStrength, false);
+            _hitTask = new Task(LerpToPos(transform.position, toPos, this.gameObject, false, _stabStrength / 2));
+            _hitTask.Finished += Task_Finished;
         }
+
+        _hitTask.Start();
     }
 
-    private Vector3 GetDestination(Vector3 hitFromPos, float power, bool isTrown)
+    private void Task_Finished(bool manual)
     {
-        Vector3 direction = transform.position - hitFromPos;
+        GetComponent<HealthManager>().TakeDamage(1);
+        _hitTask.Finished -= Task_Finished;
+    }
+
+    private Vector3 GetDestination(GameObject hitObject, float power, bool isTrown)
+    {
+        Vector3 direction;
         if (isTrown)
         {
+            direction = hitObject.transform.forward;
             RaycastHit hit;
             Physics.Raycast(transform.position, direction, out hit);
-            return hit.transform.position;
+            return hit.point;
         }
+        direction = transform.position - hitObject.transform.position;
         Vector3 Destination = direction * power;
         return Destination;
     }

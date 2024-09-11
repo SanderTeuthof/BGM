@@ -29,9 +29,6 @@ public class HealthManager : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
-        Debug.Log("Damage taken!");        
-        _health = Mathf.Max(0, _health - damage);
-
         CheckDeath();
     }
 
@@ -42,10 +39,7 @@ public class HealthManager : MonoBehaviour
 
     private void CheckDeath()
     {
-        if (_health == 0)
-        {
-            _destroyable.Destroy();
-        }
+        _destroyable.Destroy();
     }
 
     private void OnCollisionEnter(Collision collision)
