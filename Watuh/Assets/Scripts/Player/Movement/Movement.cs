@@ -24,6 +24,8 @@ public class Movement : MonoBehaviour
     private float _dashMomentumTakeOver = 0.5f;
     [SerializeField]
     private float _dashTime = 1f;
+    [SerializeField]
+    private float _dashStrength = 20;
 
     [Header("Fall Settings")]
     [SerializeField]
@@ -302,14 +304,23 @@ public class Movement : MonoBehaviour
 
     private IEnumerator DoDash(Vector3 startpos, Vector3 toPos, float timer)
     {
+        //float time = 0;
+        //while (time < timer)
+        //{
+        //    time += Time.deltaTime;
+        //    Vector3 newPos = Vector3.Lerp(startpos, toPos, time);
+        //    transform.position = newPos;
+        //    yield return null;
+        //}
         float time = 0;
-        while (time < timer)
+        while (time < 1)
         {
             time += Time.deltaTime;
-            Vector3 newPos = Vector3.Lerp(startpos, toPos, time);
-            transform.position = newPos;
+            Debug.Log(time);
+            _controller.Move(_camera.transform.forward * _dashStrength * Time.deltaTime);
             yield return null;
         }
+
     }
 
     private bool IsGrounded()
