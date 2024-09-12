@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class Trident : MonoBehaviour
 {
     [Header("Transforms")]
-    [SerializeField] private Transform _cameraTransform;
     [SerializeField] private Transform _tridentHolder;
 
     [Header("Stats")]
@@ -46,6 +45,8 @@ public class Trident : MonoBehaviour
         if (other.gameObject.layer == 9)
         {
             transform.parent = other.transform;
+            _rb.velocity = Vector3.zero;
+            _canTeleport = true;
         }
         if (other.gameObject.layer != _teleportLayer) return;
         _rb.velocity = Vector3.zero;
@@ -96,10 +97,10 @@ public class Trident : MonoBehaviour
     {
         float timer = 0;
         _rb.isKinematic = false;
-        transform.parent = _tridentHolder.transform;
+        transform.parent = null;
         if (_taskManager == null || !_taskManager.Running)
         {
-            _taskManager = new Task(LerpToPos(transform.localPosition, Vector3.zero, this.gameObject, true, _retrievSpeed));
+            _taskManager = new Task(LerpToPos(transform.position, _tridentHolder.transform.position, this.gameObject, false, _retrievSpeed));
             _taskManager.Finished += RetrieveTrident_Finished;
             _taskManager.Start();
         }
@@ -107,6 +108,7 @@ public class Trident : MonoBehaviour
 
     private void RetrieveTrident_Finished(bool manual)
     {
+        transform.parent = _tridentHolder.transform;
         transform.rotation = new Quaternion(0, 0, 0, 0);
         transform.localPosition = Vector3.zero;
         _rb.isKinematic = true;

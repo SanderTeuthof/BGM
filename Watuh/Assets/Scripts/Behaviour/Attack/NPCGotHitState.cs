@@ -47,7 +47,6 @@ public class NPCGotHitState : MonoBehaviour, INPCBehaviourState
     public void StartState(object data = null)
     {
         IsActive = true;
-        Debug.Log("startState");
         GameObject tridentGO = data as GameObject;
         if (tridentGO == null) return;
         Trident trident = tridentGO.GetComponent<Trident>();
@@ -91,5 +90,6 @@ public class NPCGotHitState : MonoBehaviour, INPCBehaviourState
             yield return null;
         }
         GetComponent<HealthManager>().TakeDamage(1);
+        EndState();
     }
 }
