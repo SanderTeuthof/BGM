@@ -127,7 +127,7 @@ public class Trident : MonoBehaviour
         while (time < timer -2)
         {
             time += Time.deltaTime;
-            Vector3 newPos = Vector3.Lerp(transform.position, _tridentHolder.transform.position, time * Time.deltaTime);
+            Vector3 newPos = Vector3.Lerp(transform.position, _tridentHolder.transform.position, time / timer);
             transform.position = newPos;
             yield return null;
         }
