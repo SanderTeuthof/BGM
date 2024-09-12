@@ -191,7 +191,7 @@ public class Movement : MonoBehaviour
 
         if (!_falling)
         {
-            Debug.Log(Momentum + " " + _controller.velocity.magnitude);
+            //Debug.Log(Momentum + " " + _controller.velocity.magnitude);
             float min = MathF.Min(_maxSpeed, _controller.velocity.magnitude);
             if (min < Momentum)
                 Momentum = Mathf.Lerp(Momentum, min, 0.1f);
@@ -264,12 +264,13 @@ public class Movement : MonoBehaviour
         }
     }
 
-    public void StartDash(InputAction.CallbackContext ctx)
+    public void StartDash()
     {
         if (_dashing)
             return;
 
         StartCoroutine(StartDashing());
+        StartCoroutine(DoDash(transform.position, transform.position + (_camera.transform.forward * 100), _dashTime));
     }
 
     public void StartJump(InputAction.CallbackContext ctx)
@@ -297,6 +298,18 @@ public class Movement : MonoBehaviour
 
         Momentum = momentumAfterDash;
         _dashing = false;
+    }
+
+    private IEnumerator DoDash(Vector3 startpos, Vector3 toPos, float timer)
+    {
+        float time = 0;
+        while (time < timer)
+        {
+            time += Time.deltaTime;
+            Vector3 newPos = Vector3.Lerp(startpos, toPos, time);
+            transform.position = newPos;
+            yield return null;
+        }
     }
 
     private bool IsGrounded()
