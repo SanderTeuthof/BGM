@@ -44,9 +44,12 @@ public class Trident : MonoBehaviour
         _rb.isKinematic = true;
         if (other.gameObject.layer == 9)
         {
-            transform.parent = other.transform;
-            _rb.velocity = Vector3.zero;
-            _canTeleport = true;
+            if (!other.gameObject.GetComponent<HealthManager>().IsHit)
+            {
+                transform.parent = other.transform;
+                _rb.velocity = Vector3.zero;
+                _canTeleport = true;
+            }
         }
         if (other.gameObject.layer != _teleportLayer) return;
         _rb.velocity = Vector3.zero;
@@ -100,7 +103,7 @@ public class Trident : MonoBehaviour
         transform.parent = null;
         if (_taskManager == null || !_taskManager.Running)
         {
-            _taskManager = new Task(LerpToPos(transform.position, _tridentHolder.transform.position, this.gameObject, false, _retrievSpeed));
+            _taskManager = new Task(DoRetireveTrident(_retrievSpeed));
             _taskManager.Finished += RetrieveTrident_Finished;
             _taskManager.Start();
         }
@@ -118,15 +121,14 @@ public class Trident : MonoBehaviour
         _taskManager.Finished -= RetrieveTrident_Finished;
     }
 
-    private IEnumerator LerpToPos(Vector3 startpos, Vector3 toPos, GameObject MoveObject, bool moveLocal, float timer)
+    private IEnumerator DoRetireveTrident(float timer)
     {
         float time = 0;
-        while (time < timer - 2f)
+        while (time < timer -2)
         {
             time += Time.deltaTime;
-            Vector3 newPos = Vector3.Lerp(startpos, toPos, time);
-            if(moveLocal) MoveObject.transform.localPosition = newPos;
-            else MoveObject.transform.position = newPos;
+            Vector3 newPos = Vector3.Lerp(transform.position, _tridentHolder.transform.position, time * Time.deltaTime);
+            transform.position = newPos;
             yield return null;
         }
     }

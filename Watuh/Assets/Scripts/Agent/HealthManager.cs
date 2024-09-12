@@ -15,7 +15,8 @@ public class HealthManager : MonoBehaviour
 
     private NPCBehaviourStateManager _npcBehaviourIdleStatesManager;
 
-    private bool _isHit;
+    [HideInInspector]
+    public bool IsHit;
 
     private void Awake()
     {
@@ -46,9 +47,9 @@ public class HealthManager : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer != 7 || _isHit) return;
+        if (collision.gameObject.layer != 7 || IsHit) return;
         _npcBehaviourIdleStatesManager.SetNewState(NPCBehaviourStates.GotHit, collision.gameObject);
-        _isHit = true;
+        IsHit = true;
     }
 
     private IEnumerator IsTridentInside()
