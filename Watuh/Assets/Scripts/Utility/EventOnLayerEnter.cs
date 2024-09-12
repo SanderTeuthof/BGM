@@ -12,7 +12,6 @@ public class EventOnLayerEnter : MonoBehaviour
         if (((1 << other.gameObject.layer) & _layerEnter) != 0)
         {
             _gameEvent.Raise(this, other.gameObject);
-            Debug.Log("Raised");
         }
     }
 }
