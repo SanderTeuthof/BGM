@@ -46,6 +46,7 @@ public class NPCGotHitState : MonoBehaviour, INPCBehaviourState
 
     public void StartState(object data = null)
     {
+        Debug.Log("StartedState");
         IsActive = true;
         GameObject tridentGO = data as GameObject;
         if (tridentGO == null) return;

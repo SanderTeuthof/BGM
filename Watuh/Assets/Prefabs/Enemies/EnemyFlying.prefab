@@ -355,8 +355,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weight: 1
   _animationNames: []
-  _stabStrength: 25
-  _trowstrength: 50
+  _stabStrength: 70
+  _trowstrength: 70
 --- !u!114 &7391084612672655671
 MonoBehaviour:
   m_ObjectHideFlags: 0
