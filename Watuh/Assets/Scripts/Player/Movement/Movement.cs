@@ -29,28 +29,19 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private float _fallMomentumBuild = 1f;
     [SerializeField]
-    private float _minFallTime = 0.1f; 
-    [SerializeField]
     private float _maxFallTime = 1f;
-    [SerializeField]
-    private float _fallingSpeedMulti = 1f;
     [SerializeField]
     private float _maxFallForce = -100f;
     [SerializeField]
-    private float _fallInputEffectiveness = 1f; // Control fall input reduction
-    [SerializeField]
-    private float _fallTimeInputCutoff = 1f; // When the input becomes ineffective
+    private float _fallTimeInputCutoff = 1f;
     [SerializeField]
     private float _groundCheckDistance = 0.1f;
     [SerializeField]
-    private float _fallTimeMulti = 1f;
-    private float _buildGravityMult = 2.7f;
+    private EasingType _fallEasingType = EasingType.InOutQuad;
 
     [Header("Jump Settings")]
     [SerializeField]
     private float _jumpPower = 10f;
-    [SerializeField]
-    private float _gravityMultiplier = 1.2f;
     [SerializeField]
     private float _cayoteTime = 0.3f;
     [SerializeField]
@@ -68,6 +59,7 @@ public class Movement : MonoBehaviour
 
     private const float _gravity = -9.81f;
     private float _velocityY = 0f;
+    private float _startVelocityY;
     private bool _jumped = false;
     private float _fallTime = 0f;
     private bool _fallingValue = false;
@@ -88,6 +80,7 @@ public class Movement : MonoBehaviour
                 else 
                 { 
                     _jumped = false;
+                    _startVelocityY = -1f;
                 }
             }
         }
@@ -104,10 +97,8 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
+        Application.targetFrameRate = -1;
         _controller = GetComponent<CharacterController>();
-        #if !UNITY_EDITOR
-                    _gravityMultiplier *= _buildGravityMult; 
-        #endif
     }
 
     private void Update()
@@ -139,7 +130,7 @@ public class Movement : MonoBehaviour
         float verticalInput = inputDirection.y;
 
         // Reduce input impact while falling
-        float fallInputMultiplier = Mathf.Lerp(_fallInputEffectiveness, 0f, Mathf.Clamp01(_fallTime / _fallTimeInputCutoff));
+        float fallInputMultiplier = Mathf.Lerp(1, 0f, Mathf.Clamp01(_fallTime / _fallTimeInputCutoff));
 
         _prevInput = (cameraForward * verticalInput + cameraSidewards * horizontalInput);
 
@@ -158,7 +149,6 @@ public class Movement : MonoBehaviour
         }
 
         float horizontalRotation = inputDirection.x * _rotationSpeed * Time.deltaTime;
-
         Vector3 currentRot = transform.rotation.eulerAngles;
         transform.rotation = Quaternion.Euler(currentRot.x, currentRot.y + horizontalRotation, currentRot.z);
     }
@@ -174,15 +164,23 @@ public class Movement : MonoBehaviour
         {
             if (_velocityY < 0f) _velocityY = -1f;
             _falling = false;
+            _fallTime = 0f;
         }
         else
         {
             _falling = true;
-            float gravityEffect = _gravity * _gravityMultiplier;
-            _velocityY = MathF.Max(_velocityY + gravityEffect * _fallTime * _fallTime, _maxFallForce);
+
+            float fallProgress = Mathf.Clamp01(_fallTime / _maxFallTime);
+
+            float gravityEffect = Mathf.Lerp(_startVelocityY, _maxFallForce, EasingFunctions.Ease(_fallEasingType, fallProgress));
+
+            _velocityY = gravityEffect;
+
+            //float gravityEffect = _gravity * _gravityMultiplier * _fallTime * _fallTime * _fallingSpeedMulti;
+            //_velocityY = Mathf.Max(_velocityY + gravityEffect * Time.deltaTime, _maxFallForce);
         }
 
-        _movement.y = _velocityY * Time.deltaTime;
+        _movement.y = _velocityY;
         Momentum += _fallMomentumBuild * _fallTime;
     }
 
@@ -193,6 +191,7 @@ public class Movement : MonoBehaviour
 
         if (!_falling)
         {
+            Debug.Log(Momentum + " " + _controller.velocity.magnitude);
             float min = MathF.Min(_maxSpeed, _controller.velocity.magnitude);
             if (min < Momentum)
                 Momentum = Mathf.Lerp(Momentum, min, 0.1f);
@@ -202,19 +201,19 @@ public class Movement : MonoBehaviour
 
         if (input > 0.1f)
         {
-            Momentum = MathF.Max(Momentum, MathF.Min(Momentum + input * _speedBuildup * Time.deltaTime, _maxWalkSpeed));
+            Momentum = Mathf.Max(Momentum, Mathf.Min(Momentum + input * _speedBuildup * Time.deltaTime, _maxWalkSpeed));
             return;
         }
 
         if (Momentum > 0f && !_falling)
         {
-            Momentum = MathF.Max(MathF.Min(Momentum - _maxWalkSpeed * (1 / _breakTime) * Time.deltaTime, Momentum - Momentum * (1 / _breakTime) * Time.deltaTime), 0f);
+            Momentum = Mathf.Max(Mathf.Min(Momentum - _maxWalkSpeed * (1 / _breakTime) * Time.deltaTime, Momentum - Momentum * (1 / _breakTime) * Time.deltaTime), 0f);
         }
     }
 
     private void ExecuteMovement()
     {
-        _controller.Move(_movement * Time.deltaTime * Momentum);
+        _controller.Move(_movement * Momentum * Time.deltaTime);
         _movement = Vector3.zero;
     }
 
@@ -225,15 +224,10 @@ public class Movement : MonoBehaviour
 
     private IEnumerator FallingTime()
     {
-        _fallTime = 0;
-        float timer = 0f;
 
-        while (_falling && timer < _cayoteTime)
+        while (_falling && _fallTime < _cayoteTime)
         {
-            timer += Time.deltaTime;               
-
-            _fallTime += Time.deltaTime * _fallingSpeedMulti;
-            _fallTime = Mathf.Clamp(_fallTime, _minFallTime, _maxFallTime); // Apply min/max constraints
+            _fallTime += Time.deltaTime;
             yield return null;
         }
 
@@ -242,15 +236,35 @@ public class Movement : MonoBehaviour
 
         while (_falling)
         {
-            _fallTime += Time.deltaTime * _fallingSpeedMulti;
-            _fallTime = Mathf.Clamp(_fallTime, _minFallTime, _maxFallTime); // Apply min/max constraints
+            _fallTime += Time.deltaTime;
             yield return null;
         }
 
         _fallTime = 0f;
     }
 
-    public void StartDash()
+    private void UpdateFallingTime()
+    {
+        if (!_falling)
+            _fallTime = 0f;
+
+        if (_falling && _fallTime < _cayoteTime)
+        {
+            _fallTime += Time.deltaTime;
+
+            if (_fallTime >= _cayoteTime)
+            {
+                _jumped = true;
+            }
+        }
+
+        if (_falling)
+        {
+            _fallTime += Time.deltaTime;
+        }
+    }
+
+    public void StartDash(InputAction.CallbackContext ctx)
     {
         if (_dashing)
             return;
@@ -265,6 +279,7 @@ public class Movement : MonoBehaviour
         if (Momentum < _minJumpMomentum)
             Momentum = _minJumpMomentum;
 
+        _startVelocityY = _jumpPower;
         _jumped = true;
         _fallTime = 0;
         _velocityY = _jumpPower;
