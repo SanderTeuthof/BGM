@@ -191,7 +191,6 @@ public class Movement : MonoBehaviour
 
         if (!_falling)
         {
-            Debug.Log(Momentum + " " + _controller.velocity.magnitude);
             float min = MathF.Min(_maxSpeed, _controller.velocity.magnitude);
             if (min < Momentum)
                 Momentum = Mathf.Lerp(Momentum, min, 0.1f);
