@@ -55,9 +55,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _CornerShadows: 1
+    - _GradientShadows: 1
     - _NoiseScale: 4.77
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Shadows: 1
     - _Tile: 0.1
     m_Colors: []
   m_BuildTextureStacks: []

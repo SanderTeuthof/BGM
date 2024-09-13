@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0c3b3995e4dc14d40968d243b32c1a27
+guid: 2006b2fef35c6e74b82fd360951278e9
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,13 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: lambert1
-    second: {fileID: 2100000, guid: 66f5052e03c9c4b4eb468356b84c2f4a, type: 2}
+      name: Face
+    second: {fileID: 2100000, guid: dd4e858d58c9ead4789955d575941882, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: standardSurface1
-    second: {fileID: 2100000, guid: 76fc4569f003ccd4d91bfbb2ebff1798, type: 2}
+      name: Iron
+    second: {fileID: 2100000, guid: 9a917bccad1e74641843e98e42e47fe7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rock
+    second: {fileID: 2100000, guid: df8f85f36972f6a41b8efcfa7d84e5cc, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -47,7 +52,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 1
