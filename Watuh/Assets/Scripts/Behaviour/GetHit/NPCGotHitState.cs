@@ -109,7 +109,6 @@ public class NPCGotHitState : MonoBehaviour, INPCBehaviourState
             else MoveObject.transform.position = newPos;
             yield return null;
         }
-        EndState();
     }
 
     private IEnumerator IsTridentInside()
@@ -118,6 +117,7 @@ public class NPCGotHitState : MonoBehaviour, INPCBehaviourState
         {
             yield return new WaitForSeconds(0.3f);
         }
+        EndState();
         GetComponent<IDestroyable>().Destroy();
     }
 }

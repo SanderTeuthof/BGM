@@ -24,7 +24,6 @@ public class BuletFlyForward : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.layer);
         if ((_ignoreLayers.value & (1 << other.gameObject.layer)) != 0)
             return;
 
