@@ -24,6 +24,8 @@ public class Movement : MonoBehaviour
     private float _dashMomentumTakeOver = 0.5f;
     [SerializeField]
     private float _dashTime = 1f;
+    [SerializeField]
+    private float _dashStrength = 20;
 
     [Header("Fall Settings")]
     [SerializeField]
@@ -61,6 +63,8 @@ public class Movement : MonoBehaviour
     private float _velocityY = 0f;
     private float _startVelocityY;
     private bool _jumped = false;
+    private bool _canJumpInAir = true;
+    private bool _canDashInAir = true;
     private float _fallTime = 0f;
     private bool _fallingValue = false;
 
@@ -155,6 +159,9 @@ public class Movement : MonoBehaviour
 
     private void ApplyGravity()
     {
+        if (_dashing)
+            return;
+
         bool grounded = true;
 
         if (!_controller.isGrounded)
@@ -164,6 +171,8 @@ public class Movement : MonoBehaviour
         {
             if (_velocityY < 0f) _velocityY = -1f;
             _falling = false;
+            _canJumpInAir = true;
+            _canDashInAir = true;
             _fallTime = 0f;
         }
         else
@@ -180,7 +189,7 @@ public class Movement : MonoBehaviour
             //_velocityY = Mathf.Max(_velocityY + gravityEffect * Time.deltaTime, _maxFallForce);
         }
 
-        _movement.y = _velocityY;
+        _movement.y += _velocityY;
         Momentum += _fallMomentumBuild * _fallTime;
     }
 
@@ -263,18 +272,23 @@ public class Movement : MonoBehaviour
         }
     }
 
-    public void StartDash(InputAction.CallbackContext ctx)
+    public void StartDash()
     {
-        if (!ctx.performed || _dashing)
+        if (_dashing || !_canDashInAir)
             return;
+
+        _canDashInAir = false;
 
         StartCoroutine(StartDashing());
     }
 
     public void StartJump(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed || _jumped)
+        if (!ctx.performed || _jumped || !_canJumpInAir)
             return;
+
+        _canJumpInAir = false;
+
         if (Momentum < _minJumpMomentum)
             Momentum = _minJumpMomentum;
 
@@ -286,15 +300,24 @@ public class Movement : MonoBehaviour
 
     private IEnumerator StartDashing()
     {
+
         _dashing = true;
+        _falling = false;
         float targetMomentum = Momentum * _dashMomentumMultiplier;
         float momentumAfterDash = Mathf.Lerp(Momentum, targetMomentum, _dashMomentumTakeOver);
 
         Momentum = targetMomentum;
 
-        yield return new WaitForSeconds(_dashTime);
+        float time = 0;
+        while (time < _dashTime)
+        {
+            time += Time.deltaTime;
+            _movement += (_camera.transform.forward * _dashStrength);
+            yield return null;
+        }
 
         Momentum = momentumAfterDash;
+        _falling = true;
         _dashing = false;
     }
 

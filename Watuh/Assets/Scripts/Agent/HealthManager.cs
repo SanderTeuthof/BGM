@@ -13,6 +13,7 @@ public class HealthManager : MonoBehaviour
     private IDestroyable _destroyable;
     private ObjectInfo _objectInfo;
 
+
     private void Awake()
     {
         _health = _maxHealth;
@@ -22,22 +23,21 @@ public class HealthManager : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
-        Debug.Log("Damage taken!");        
         _health = Mathf.Max(0, _health - damage);
-
         CheckDeath();
     }
 
     public virtual void Heal(float healAmount)
     {
         _health = Mathf.Min(_maxHealth, _health + healAmount);
+        CheckDeath();
     }
 
     private void CheckDeath()
     {
-        if (_health == 0)
+        if (_health <= 0)
         {
             _destroyable.Destroy();
-        }
+        }        
     }
 }
