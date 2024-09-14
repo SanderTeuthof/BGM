@@ -9,6 +9,8 @@ public class LevelCompleteUI : MonoBehaviour
     [SerializeField]
     private GameObject _lvlDoneUi;
     [SerializeField]
+    private GameObject _lvlFailUi;
+    [SerializeField]
     private string _nextLvlName;
     [SerializeField]
     private FloatReference _completionTime;
@@ -43,5 +45,14 @@ public class LevelCompleteUI : MonoBehaviour
         Time.timeScale = 0;
         _currentLvlName = SceneManager.GetActiveScene().name;
         _completionTimeText.text = $"{_completionTime.value} seconds";
+    }
+
+    public void OpenlvlFailUI()
+    {
+        _lvlFailUi.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Time.timeScale = 0;
+        _currentLvlName = SceneManager.GetActiveScene().name;
     }
 }

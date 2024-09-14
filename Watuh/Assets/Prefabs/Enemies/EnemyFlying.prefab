@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: -536463436108698130}
   - component: {fileID: 7286151726222877473}
   - component: {fileID: 9076537669887201982}
+  - component: {fileID: 2259690207605582142}
   - component: {fileID: 6765333408775372370}
   - component: {fileID: 6245703867898022682}
   - component: {fileID: 7290063218351321798}
@@ -180,6 +181,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 10
+--- !u!114 &2259690207605582142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6320512234334720457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21d792042c507b34daef2004e651e360, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waterHeight:
+    useConstant: 0
+    constantValue: 0
+    variable: {fileID: 11400000, guid: 78796d6407bc2f0438b708d315414054, type: 2}
+  _timeBetweenChecks: 0.3
+  _yOffsetToDrown: 0
 --- !u!114 &6765333408775372370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,6 +239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startState: 1
   AnimationHanler: {fileID: 0}
+  LockState: 0
 --- !u!114 &6376583603515469198
 MonoBehaviour:
   m_ObjectHideFlags: 0

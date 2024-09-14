@@ -3,8 +3,8 @@
 [System.Serializable]
 public class PlayerScoreData
 {
-    public string playerName; // The player's name
-    public List<LevelScoreData> levelScores; // A list of scores for each level
+    public string playerName;
+    public List<LevelScoreData> levelScores;
 
     public PlayerScoreData(string playerName, List<LevelScoreData> levelScores)
     {

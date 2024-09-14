@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class DestroyGameEvent : MonoBehaviour, IDestroyable
+public class DestroyPlayer : MonoBehaviour, IDestroyable
 {
     [SerializeField]
     private GameEvent _eventToLaunch;
@@ -8,6 +8,5 @@ public class DestroyGameEvent : MonoBehaviour, IDestroyable
     public void Destroy()
     {
         _eventToLaunch.Raise(this);
-        Destroy(gameObject);
     }
 }

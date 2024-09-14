@@ -20,4 +20,9 @@ public class WaterKeepOnLevel : MonoBehaviour
         _originLocation.y = _waterHeight.value;
         transform.position = _originLocation;
     }
+
+    private void OnDestroy()
+    {
+        _waterHeight.OnDestroy();
+    }
 }
