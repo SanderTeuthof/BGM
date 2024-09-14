@@ -43,8 +43,6 @@ public class PlayPlayerSound : MonoBehaviour
             {
                 // Calculate the adjusted step speed using the easing function
                 float adjustedStepInterval = GetEasedStepInterval(_movement.Momentum);
-
-                Debug.Log("Walking with interval: " + adjustedStepInterval);
                 yield return new WaitForSeconds(adjustedStepInterval);
             }
             else
