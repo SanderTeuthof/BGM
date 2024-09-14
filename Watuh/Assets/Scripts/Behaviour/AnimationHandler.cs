@@ -12,12 +12,12 @@ public class AnimationHandler : MonoBehaviour
 
     public void SetAnimationBool(string name, bool value)
     {
-        //_animator.SetBool(name, value);
+        _animator.SetBool(name, value);
     }
 
     public void SetAnimationBoolForDuration(string whichBool, bool newState, float duration)
     {
-        //StartCoroutine(SetAnimationBoolCoroutine(whichBool, newState, duration));
+        StartCoroutine(SetAnimationBoolCoroutine(whichBool, newState, duration));
     }
 
     private IEnumerator SetAnimationBoolCoroutine(string whichBool, bool newState, float duration)

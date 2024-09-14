@@ -55,7 +55,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CornerShadows: 1
+    - _CornerShadows: 0
     - _GradientShadows: 1
     - _NoiseScale: 4.77
     - _QueueControl: 0
