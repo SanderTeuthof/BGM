@@ -57,7 +57,7 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private Transform _camera;
     [SerializeField]
-    private float _rotationSpeed = 0.1f;
+    private FloatReference _rotationSpeed;
 
     private const float _gravity = -9.81f;
     private float _velocityY = 0f;
@@ -153,7 +153,7 @@ public class Movement : MonoBehaviour
             return;
         }
 
-        float horizontalRotation = inputDirection.x * _rotationSpeed * Time.deltaTime;
+        float horizontalRotation = inputDirection.x * _rotationSpeed.value * Time.deltaTime;
         Vector3 currentRot = transform.rotation.eulerAngles;
         transform.rotation = Quaternion.Euler(currentRot.x, currentRot.y + horizontalRotation, currentRot.z);
     }

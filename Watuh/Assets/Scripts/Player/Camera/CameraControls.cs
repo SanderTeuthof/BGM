@@ -8,7 +8,7 @@ public class CameraControls : MonoBehaviour
     [SerializeField]
     private CinemachineVirtualCamera _camera;
     [SerializeField]
-    private float _speedVertical = 1.0f;    
+    private FloatReference _speedVertical;    
     [SerializeField, Tooltip("This is in degrees"), Range(-90f, 0f)]
     private float _minVerticalRotation = -60f; 
     [SerializeField, Tooltip("This is in degrees"), Range(0f, 90f)]
@@ -38,7 +38,7 @@ public class CameraControls : MonoBehaviour
                 continue;
             }
 
-            _verticalRotation -= _mouseInput.y * _speedVertical * Time.deltaTime;
+            _verticalRotation -= _mouseInput.y * _speedVertical.value * Time.deltaTime;
 
             _verticalRotation = Mathf.Clamp(_verticalRotation, _minVerticalRotation, _maxVerticalRotation);
 
