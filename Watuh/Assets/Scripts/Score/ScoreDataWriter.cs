@@ -7,6 +7,6 @@ public class ScoreDataWriter
     {
         string jsonData = JsonUtility.ToJson(playerScoreData, true);
         PlayerPrefs.SetString("PlayerScoreData", jsonData);
-        PlayerPrefs.Save(); // Save the PlayerPrefs changes
+        PlayerPrefs.Save();
     }
 }
