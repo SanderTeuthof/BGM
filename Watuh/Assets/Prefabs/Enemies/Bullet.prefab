@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4155103997156389258}
   - component: {fileID: 6738353620913760997}
   - component: {fileID: 8073199886183320223}
+  - component: {fileID: 829737135458804406}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -29,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6839523667295545459}
   m_Father: {fileID: 0}
@@ -50,7 +51,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -96,6 +97,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _force: 40
+  _looseGame: {fileID: 11400000, guid: 712cc745c6f0a0248b89828d621cca84, type: 2}
+  _ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 512
+--- !u!114 &829737135458804406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2661272210798307478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3db380fed43548a4ba7e80279cca43dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _thingToSpawn: {fileID: 7545949022932388358, guid: bbfb8b686010bef47ad276d333c204d2,
+    type: 3}
 --- !u!1 &6366702127824926611
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,7 +176,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 66f5052e03c9c4b4eb468356b84c2f4a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

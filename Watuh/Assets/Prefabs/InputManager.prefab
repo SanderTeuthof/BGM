@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7819703503111414509}
   - component: {fileID: 6947628697448731307}
   - component: {fileID: 2266908607092860417}
+  - component: {fileID: 2073809388792478768}
+  - component: {fileID: 2619876452392864029}
   m_Layer: 0
   m_Name: InputManager
   m_TagString: Untagged
@@ -68,14 +70,10 @@ MonoBehaviour:
     m_ActionId: 4b889eac-7e63-45ac-88c0-df7cd9fa8763
     m_ActionName: Player/Look[/Mouse/delta,/Pen/delta]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: a6d09b42-4274-432b-9830-f7c2816b6b4d
-    m_ActionName: Player/Fire[/Mouse/leftButton]
-  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Movement, Assembly-CSharp
-        m_MethodName: StartDash
+        m_TargetAssemblyTypeName: Trident, Assembly-CSharp
+        m_MethodName: Trow
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -85,6 +83,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+    m_ActionId: a6d09b42-4274-432b-9830-f7c2816b6b4d
+    m_ActionName: Player/Fire[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
     m_ActionId: 4c44d068-79ba-45c2-92ca-724867428b46
     m_ActionName: Player/Dash[/Keyboard/shift]
   - m_PersistentCalls:
@@ -145,7 +147,39 @@ MonoBehaviour:
     m_ActionName: Player/Jump[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2266908607092860417}
+      - m_Target: {fileID: 2073809388792478768}
+        m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
+        m_MethodName: LoadSceneByName
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d2e80965-d92a-42df-a10c-27d523a93546
+    m_ActionName: Player/MainMenu[/Keyboard/m]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Trident, Assembly-CSharp
+        m_MethodName: Stab
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: bc1ed14d-e64f-4f63-a2a6-0c24ca1e0865
+    m_ActionName: Player/Stab[/Mouse/leftButton,/DualSenseGamepadHID/leftTrigger]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2619876452392864029}
         m_TargetAssemblyTypeName: LaunchGameEvent, Assembly-CSharp
         m_MethodName: DoGameEvent
         m_Mode: 0
@@ -157,14 +191,41 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 4cfe948f-847f-4812-a7fd-f17787623663
-    m_ActionName: Player/ReloadScene[/Keyboard/r]
+    m_ActionId: cf078693-bb51-47e6-a351-57942600335a
+    m_ActionName: Player/Reload[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &2266908607092860417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204700729890627619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02b8c7d8c5a51cb4092009563b45174f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameEvent: {fileID: 11400000, guid: 0674018a723911748bcf0c4d59f72392, type: 2}
+--- !u!114 &2073809388792478768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204700729890627619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2288545659477442abec31f9b31f5dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneName: MainMenu
+  _loadSceneEvent: {fileID: 11400000, guid: e5600ea7c97aa484eaa1e5815cae7f07, type: 2}
+--- !u!114 &2619876452392864029
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

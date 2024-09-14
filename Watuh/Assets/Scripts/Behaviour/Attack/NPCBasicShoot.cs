@@ -96,7 +96,7 @@ public class NPCBasicShoot : MonoBehaviour, INPCAttackState
 
         GameObject projectile = Instantiate(_thingToShoot, transform.position + transform.forward, Quaternion.identity);
 
-        projectile.transform.LookAt(_target.position);
+        projectile.transform.LookAt(_target.position + Vector3.up);
 
 
         yield return new WaitForSeconds(_timeShootAnimation);
