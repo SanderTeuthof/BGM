@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3641469875391107961}
   - component: {fileID: 7438884394832493238}
   - component: {fileID: 5589179018702516388}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Visualisation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,8 @@ GameObject:
   - component: {fileID: 3194516954919598331}
   - component: {fileID: 6691324161182808605}
   - component: {fileID: 5070742486139620722}
-  m_Layer: 0
+  - component: {fileID: 2304580700879918727}
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,21 +159,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxWalkSpeed: 10
   _maxSpeed: 35
-  _speedBuildup: 10
-  _breakTime: 0.3
-  _fallMomentumBuild: 0.1
-  _dashMomentumMultiplier: 2
-  _dashMomentumTakeOver: 0.137
-  _dashTime: 0.6
+  _speedBuildup: 35
+  _breakTime: 0.15
+  _dashMomentumMultiplier: 1.5
+  _dashMomentumTakeOver: 0.768
+  _dashTime: 0.3
+  _fallMomentumBuild: 0.3
+  _maxFallTime: 0.76
+  _maxFallForce: -3.14
+  _fallTimeInputCutoff: 3
+  _groundCheckDistance: 0.3
+  _fallEasingType: 3
+  _jumpPower: 1
+  _cayoteTime: 0.3
+  _minJumpMomentum: 5
   _moveInput: {fileID: 2058153161468133996, guid: 59992708048129a4b9265620bfb22326,
     type: 3}
   _rotationInput: {fileID: 6589624298435245374, guid: 59992708048129a4b9265620bfb22326,
     type: 3}
   _camera: {fileID: 5956869494774346414}
   _rotationSpeed: 30
-  _jumpPower: 50
-  _gravityMultiplier: 0.2
-  _momentum: 0
+  Momentum: 0
+--- !u!114 &2304580700879918727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2588475895381210977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ce952bb02de81b4e85119946ba2c2eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeOfObject: 0
 --- !u!1 &3653488075694939084
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +205,7 @@ GameObject:
   - component: {fileID: 981179037444571430}
   - component: {fileID: 786074972485741543}
   - component: {fileID: 582033657594089229}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PlayerCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,7 +316,7 @@ GameObject:
   - component: {fileID: 5035931553448204150}
   - component: {fileID: 1912107717501535823}
   - component: {fileID: 5008503993438090681}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}

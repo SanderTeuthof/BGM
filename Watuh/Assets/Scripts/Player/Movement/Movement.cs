@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class Movement : MonoBehaviour
 {
+    [Header("Movement Settings")]
     [SerializeField]
     private float _maxWalkSpeed = 10f;
     [SerializeField]
@@ -15,14 +16,38 @@ public class Movement : MonoBehaviour
     private float _speedBuildup = 10f;
     [SerializeField]
     private float _breakTime = 0.3f;
-    [SerializeField]
-    private float _fallMomentumBuild = 1f;
+
+    [Header("Dash Settings")]
     [SerializeField]
     private float _dashMomentumMultiplier = 2f;
-    [SerializeField, Range(0,1)]
+    [SerializeField, Range(0, 1)]
     private float _dashMomentumTakeOver = 0.5f;
     [SerializeField]
     private float _dashTime = 1f;
+
+    [Header("Fall Settings")]
+    [SerializeField]
+    private float _fallMomentumBuild = 1f;
+    [SerializeField]
+    private float _maxFallTime = 1f;
+    [SerializeField]
+    private float _maxFallForce = -100f;
+    [SerializeField]
+    private float _fallTimeInputCutoff = 1f;
+    [SerializeField]
+    private float _groundCheckDistance = 0.1f;
+    [SerializeField]
+    private EasingType _fallEasingType = EasingType.InOutQuad;
+
+    [Header("Jump Settings")]
+    [SerializeField]
+    private float _jumpPower = 10f;
+    [SerializeField]
+    private float _cayoteTime = 0.3f;
+    [SerializeField]
+    private float _minJumpMomentum = 5;
+
+    [Header("Input Settings")]
     [SerializeField]
     private InputActionReference _moveInput;
     [SerializeField]
@@ -31,18 +56,13 @@ public class Movement : MonoBehaviour
     private Transform _camera;
     [SerializeField]
     private float _rotationSpeed = 0.1f;
-    [SerializeField]
-    private float _jumpPower = 10f;
-    [SerializeField]
-    private float _gravityMultiplier = 1.2f;
 
     private const float _gravity = -9.81f;
     private float _velocityY = 0f;
+    private float _startVelocityY;
+    private bool _jumped = false;
     private float _fallTime = 0f;
     private bool _fallingValue = false;
-
-    [HideInInspector]
-    public float _momentum = 0;
 
     private bool _falling
     {
@@ -57,41 +77,41 @@ public class Movement : MonoBehaviour
                 {
                     StartFalling();
                 }
+                else 
+                { 
+                    _jumped = false;
+                    _startVelocityY = -1f;
+                }
             }
         }
     }
 
+    [HideInInspector]
+    public float Momentum = 0;
+
     private Vector3 _movement = Vector3.zero;
-
+    private Vector3 _prevInput = Vector3.zero;
     private Transform _target;
-
     private bool _dashing;
-
     private CharacterController _controller;
 
     private void Awake()
     {
+        Application.targetFrameRate = -1;
         _controller = GetComponent<CharacterController>();
     }
 
     private void Update()
     {
         RotateWithInput();
-
-        GetHorizontalInput();       
-
+        GetHorizontalInput();
         ApplyGravity();
-
         CalculateMomentum();
-
         ExecuteMovement();
     }
 
     private void GetHorizontalInput()
     {
-        if (_dashing) 
-            return;
-
         Vector2 inputDirection = _moveInput.action.ReadValue<Vector2>();
 
         Vector3 cameraForward = _camera.forward;
@@ -100,7 +120,7 @@ public class Movement : MonoBehaviour
 
         if (inputDirection.magnitude < 0.1f && !_falling)
         {
-            _movement += cameraForward;
+            _movement += _prevInput.normalized;
             return;
         }
 
@@ -108,8 +128,16 @@ public class Movement : MonoBehaviour
 
         float horizontalInput = -inputDirection.x;
         float verticalInput = inputDirection.y;
-               
-        _movement += (cameraForward * verticalInput + cameraSidewards * horizontalInput);
+
+        // Reduce input impact while falling
+        float fallInputMultiplier = Mathf.Lerp(1, 0f, Mathf.Clamp01(_fallTime / _fallTimeInputCutoff));
+
+        _prevInput = (cameraForward * verticalInput + cameraSidewards * horizontalInput);
+
+        if (_dashing)
+            _prevInput.Normalize();
+
+        _movement += _prevInput * fallInputMultiplier;
     }
 
     private void RotateWithInput()
@@ -121,27 +149,39 @@ public class Movement : MonoBehaviour
         }
 
         float horizontalRotation = inputDirection.x * _rotationSpeed * Time.deltaTime;
-
         Vector3 currentRot = transform.rotation.eulerAngles;
         transform.rotation = Quaternion.Euler(currentRot.x, currentRot.y + horizontalRotation, currentRot.z);
     }
 
     private void ApplyGravity()
     {
-        if (_controller.isGrounded)
+        bool grounded = true;
+
+        if (!_controller.isGrounded)
+            grounded = IsGrounded();
+
+        if (grounded)
         {
             if (_velocityY < 0f) _velocityY = -1f;
             _falling = false;
+            _fallTime = 0f;
         }
         else
         {
             _falling = true;
-            float gravityEffect = _gravity * _gravityMultiplier;
-            _velocityY += Mathf.Min(-1, gravityEffect * _fallTime * _fallTime);
+
+            float fallProgress = Mathf.Clamp01(_fallTime / _maxFallTime);
+
+            float gravityEffect = Mathf.Lerp(_startVelocityY, _maxFallForce, EasingFunctions.Ease(_fallEasingType, fallProgress));
+
+            _velocityY = gravityEffect;
+
+            //float gravityEffect = _gravity * _gravityMultiplier * _fallTime * _fallTime * _fallingSpeedMulti;
+            //_velocityY = Mathf.Max(_velocityY + gravityEffect * Time.deltaTime, _maxFallForce);
         }
 
-        _movement.y = _velocityY * Time.deltaTime;
-        _momentum += _fallMomentumBuild * _fallTime;
+        _movement.y = _velocityY;
+        Momentum += _fallMomentumBuild * _fallTime;
     }
 
     private void CalculateMomentum()
@@ -149,56 +189,78 @@ public class Movement : MonoBehaviour
         if (_dashing)
             return;
 
-        _momentum = MathF.Min(_momentum, MathF.Min(_maxSpeed, _controller.velocity.magnitude));
+        if (!_falling)
+        {
+            float min = MathF.Min(_maxSpeed, _controller.velocity.magnitude);
+            if (min < Momentum)
+                Momentum = Mathf.Lerp(Momentum, min, 0.1f);
+        }
 
         float input = _moveInput.action.ReadValue<Vector2>().magnitude;
 
         if (input > 0.1f)
         {
-            _momentum = MathF.Max(_momentum, MathF.Min(_momentum + input * _speedBuildup * Time.deltaTime, _maxWalkSpeed));
+            Momentum = Mathf.Max(Momentum, Mathf.Min(Momentum + input * _speedBuildup * Time.deltaTime, _maxWalkSpeed));
             return;
         }
-        if (_momentum > 0f)
+
+        if (Momentum > 0f && !_falling)
         {
-            _momentum = MathF.Max(MathF.Min(_momentum - _maxWalkSpeed * (1/_breakTime) * Time.deltaTime, _momentum - _momentum * (1 / _breakTime) * Time.deltaTime), 0f);
+            Momentum = Mathf.Max(Mathf.Min(Momentum - _maxWalkSpeed * (1 / _breakTime) * Time.deltaTime, Momentum - Momentum * (1 / _breakTime) * Time.deltaTime), 0f);
         }
     }
 
     private void ExecuteMovement()
     {
-        //Debug.Log(_momentum);
-        _controller.Move(_movement * Time.deltaTime * _momentum);
+        _controller.Move(_movement * Momentum * Time.deltaTime);
         _movement = Vector3.zero;
     }
 
     private void StartFalling()
     {
-        // _animator.SetAnimationBool(PlayerAnimationBools.Falling, true);
         StartCoroutine(FallingTime());
     }
 
     private IEnumerator FallingTime()
     {
-        _fallTime = 0;
+
+        while (_falling && _fallTime < _cayoteTime)
+        {
+            _fallTime += Time.deltaTime;
+            yield return null;
+        }
+
+        if(_falling) 
+            _jumped = true;
 
         while (_falling)
         {
             _fallTime += Time.deltaTime;
-            _fallTime = Mathf.Min(_fallTime, 1f);
             yield return null;
         }
 
         _fallTime = 0f;
     }
 
-    public float GetYVelocity()
+    private void UpdateFallingTime()
     {
-        return _velocityY;
-    }
+        if (!_falling)
+            _fallTime = 0f;
 
-    public Vector3 GetVelocity()
-    {
-        return _controller.velocity;
+        if (_falling && _fallTime < _cayoteTime)
+        {
+            _fallTime += Time.deltaTime;
+
+            if (_fallTime >= _cayoteTime)
+            {
+                _jumped = true;
+            }
+        }
+
+        if (_falling)
+        {
+            _fallTime += Time.deltaTime;
+        }
     }
 
     public void StartDash(InputAction.CallbackContext ctx)
@@ -211,33 +273,36 @@ public class Movement : MonoBehaviour
 
     public void StartJump(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed || _falling)
+        if (!ctx.performed || _jumped)
             return;
+        if (Momentum < _minJumpMomentum)
+            Momentum = _minJumpMomentum;
 
+        _startVelocityY = _jumpPower;
+        _jumped = true;
+        _fallTime = 0;
         _velocityY = _jumpPower;
     }
 
     private IEnumerator StartDashing()
     {
         _dashing = true;
-        float targetMomentum = _momentum * _dashMomentumMultiplier;
-        float momentumAfterDash = Mathf.Lerp(_momentum, targetMomentum, _dashMomentumTakeOver);
-        
-        _momentum = targetMomentum;
+        float targetMomentum = Momentum * _dashMomentumMultiplier;
+        float momentumAfterDash = Mathf.Lerp(Momentum, targetMomentum, _dashMomentumTakeOver);
 
-        float time = 0;
-        while (time < _dashTime)
-        {
-            Vector3 forwardVec = _camera.transform.forward;
-            forwardVec.y = 0f;
-            _movement = forwardVec.normalized;
+        Momentum = targetMomentum;
 
-            time += Time.deltaTime;
-            yield return null;
-        }
+        yield return new WaitForSeconds(_dashTime);
 
-        _momentum = momentumAfterDash;
-
+        Momentum = momentumAfterDash;
         _dashing = false;
     }
+
+    private bool IsGrounded()
+    {
+        // Cast a ray from the character slightly downwards to check for the ground
+        return Physics.Raycast(transform.position, Vector3.down, _groundCheckDistance);
+    }
 }
+
+

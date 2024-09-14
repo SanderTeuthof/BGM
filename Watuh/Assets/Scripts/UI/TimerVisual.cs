@@ -5,15 +5,17 @@ using UnityEngine;
 
 public class TimerVisual : MonoBehaviour
 {
+    [SerializeField]
+    private FloatReference _currentTime;
+
     private TextMeshProUGUI _timerText;  // Reference to the TextMeshPro component
 
     private Coroutine _timerCoroutine;   // To keep track of the running timer coroutine
-    private float _currentTime = 0f;     // Variable to track the current time
     private bool _isTimerRunning = false;
 
     private void Start()
     {
-
+        _currentTime.SetValue(0);
         _timerText = GetComponent<TextMeshProUGUI>();
         StartTimer();
 
@@ -43,7 +45,7 @@ public class TimerVisual : MonoBehaviour
     public void ResetTimer()
     {
         StopTimer();  // Stop the timer if it's running
-        _currentTime = 0f;      // Reset the time
+        _currentTime.SetValue(0f);      // Reset the time
         UpdateTimerText();      // Update the UI with the reset time
     }
 
@@ -52,7 +54,7 @@ public class TimerVisual : MonoBehaviour
     {
         while (true)
         {
-            _currentTime += Time.deltaTime;  // Increment the timer
+            _currentTime.SetValue(_currentTime.value + Time.deltaTime);  // Increment the timer
             UpdateTimerText();               // Update the displayed time
             yield return null;               // Wait for the next frame
         }
@@ -61,7 +63,7 @@ public class TimerVisual : MonoBehaviour
     // Method to update the timer text
     private void UpdateTimerText()
     {
-        _timerText.text = FormatTime(_currentTime);  // Set the text to formatted time
+        _timerText.text = FormatTime(_currentTime.value);  // Set the text to formatted time
     }
 
     // Utility function to format time into minutes and seconds
