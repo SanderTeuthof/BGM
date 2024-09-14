@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 21728112}
   - component: {fileID: 21728111}
   - component: {fileID: 21728110}
+  - component: {fileID: 21728113}
   m_Layer: 5
   m_Name: Username
   m_TagString: Untagged
@@ -224,7 +225,19 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 21728113}
+        m_TargetAssemblyTypeName: PlayerNameSetter, Assembly-CSharp
+        m_MethodName: OnSubmitName
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -299,6 +312,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21728108}
   m_CullTransparentMesh: 1
+--- !u!114 &21728113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21728108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d78f995346d4984385f5622a17534dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &221478392
 GameObject:
   m_ObjectHideFlags: 0
@@ -1504,6 +1529,79 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1001 &712607288
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 363025124058118099, guid: 7d2077cb4fbdea046aa4ca59c6c3bcce,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1505.6985
+      objectReference: {fileID: 0}
+    - target: {fileID: 363025124058118099, guid: 7d2077cb4fbdea046aa4ca59c6c3bcce,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2341.6555
+      objectReference: {fileID: 0}
+    - target: {fileID: 363025124058118099, guid: 7d2077cb4fbdea046aa4ca59c6c3bcce,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 137.52783
+      objectReference: {fileID: 0}
+    - target: {fileID: 363025124058118099, guid: 7d2077cb4fbdea046aa4ca59c6c3bcce,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 363025124058118099, guid: 7d2077cb4fbdea046aa4ca59c6c3bcce,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 363025124058118099, guid: 7d2077cb4fbdea046aa4ca59c6c3bcce,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 363025124058118099, guid: 7d2077cb4fbdea046aa4ca59c6c3bcce,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 363025124058118099, guid: 7d2077cb4fbdea046aa4ca59c6c3bcce,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 363025124058118099, guid: 7d2077cb4fbdea046aa4ca59c6c3bcce,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 363025124058118099, guid: 7d2077cb4fbdea046aa4ca59c6c3bcce,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1696228812217078683, guid: 7d2077cb4fbdea046aa4ca59c6c3bcce,
+        type: 3}
+      propertyPath: _lockCursor
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7343055503868397909, guid: 7d2077cb4fbdea046aa4ca59c6c3bcce,
+        type: 3}
+      propertyPath: m_Name
+      value: CursorRemover
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7d2077cb4fbdea046aa4ca59c6c3bcce, type: 3}
 --- !u!1 &717888444
 GameObject:
   m_ObjectHideFlags: 0
@@ -2986,7 +3084,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: INSERT GAME NAME
+  m_text: GEISER ESCAPE?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3139,10 +3237,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -3193,3 +3291,4 @@ SceneRoots:
   - {fileID: 963194228}
   - {fileID: 705507995}
   - {fileID: 279653998}
+  - {fileID: 712607288}
