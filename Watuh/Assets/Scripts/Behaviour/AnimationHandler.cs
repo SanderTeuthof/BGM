@@ -12,11 +12,16 @@ public class AnimationHandler : MonoBehaviour
 
     public void SetAnimationBool(string name, bool value)
     {
+        if (name.Length == 0)
+            return;
+
         _animator.SetBool(name, value);
     }
 
     public void SetAnimationBoolForDuration(string whichBool, bool newState, float duration)
     {
+        if (name.Length == 0)
+            return;
         StartCoroutine(SetAnimationBoolCoroutine(whichBool, newState, duration));
     }
 
