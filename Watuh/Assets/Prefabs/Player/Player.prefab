@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 2304580700879918727}
   - component: {fileID: 7308078649724469834}
   - component: {fileID: 7077480481767596988}
+  - component: {fileID: 97704700688125956}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -227,6 +228,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _eventToLaunch: {fileID: 11400000, guid: ba04013d04ed06e49995558dc9b2b9c6, type: 2}
+--- !u!114 &97704700688125956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2588475895381210977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b62eef291fe140f4ab663e85f1f3b6c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _jump: {fileID: 8300000, guid: e437186e72aa5b34bb1b61ce1ab0ef53, type: 3}
+  _throw: {fileID: 8300000, guid: 8dba0823c82894c44a2f8bdf89edb917, type: 3}
+  _dash: {fileID: 8300000, guid: 5c82c1589dc701d42948ee7e1ec0dfa3, type: 3}
+  _teleport: {fileID: 8300000, guid: d7f9a5b945dd85943b32fab3f7a1a9aa, type: 3}
+  _hit: {fileID: 8300000, guid: 47dffdd05c5e8a14a85772cd04184a7a, type: 3}
+  _steps:
+  - {fileID: 8300000, guid: 56a3c88ad8f550f4c810f687959da67a, type: 3}
+  - {fileID: 8300000, guid: f79b210992d5c8f4e82a8c4350071547, type: 3}
+  - {fileID: 8300000, guid: 974a8ad2543afb84382b940182ae7416, type: 3}
+  - {fileID: 8300000, guid: 270dd6c03be348e409e5b2ac905e6847, type: 3}
+  _minStepSpeed: 0.05
+  _maxStepSpeed: 0.4
+  _easingType: 1
+  _eventToPlay: {fileID: 11400000, guid: 066b3694e8d0bb44588ddb542f99849c, type: 2}
 --- !u!1 &3653488075694939084
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,6 +473,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TridentHolder
+      objectReference: {fileID: 0}
+    - target: {fileID: 1922270525369104809, guid: f91aa089fb9db0c48a0e8ebbe4dffc2b,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 3.4858117
+      objectReference: {fileID: 0}
+    - target: {fileID: 1922270525369104809, guid: f91aa089fb9db0c48a0e8ebbe4dffc2b,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.56385636
       objectReference: {fileID: 0}
     - target: {fileID: 6500873857081050440, guid: f91aa089fb9db0c48a0e8ebbe4dffc2b,
         type: 3}

@@ -30,11 +30,13 @@ public class Trident : MonoBehaviour
 
     private Task _taskManager;
 
+    private PlayPlayerSound _sound;
+
     private void Start()
     {
         _playerMomentum = transform.root.GetComponent<Movement>();
         _player = _playerMomentum.gameObject;
-
+        _sound = _player.GetComponent<PlayPlayerSound>();
         _rb = GetComponent<Rigidbody>();
     }
 
@@ -50,6 +52,7 @@ public class Trident : MonoBehaviour
                 other.gameObject.GetComponent<NPCBehaviourStateManager>().SetNewState(NPCBehaviourStates.GotHit, gameObject);
                 _rb.velocity = Vector3.zero;
                 _canTeleport = true;
+                _sound.PlayHit();
             }
         }
         if (other.gameObject.layer != _teleportLayer) return;
@@ -85,7 +88,7 @@ public class Trident : MonoBehaviour
         transform.parent = null;
         _rb.AddForce((_minThrowStrength + (_trowStrength * _playerMomentum.Momentum)) * transform.forward);
         IsTrown = true;
-
+        _sound.PlayThrow();
     }
 
     private void Teleport()
@@ -95,6 +98,7 @@ public class Trident : MonoBehaviour
         _player.GetComponent<CharacterController>().enabled = true;
         _didTeleport = true;
         _canTeleport = false;
+        _sound.PlayTeleport();
     }
 
     private void RetrieveTrident()

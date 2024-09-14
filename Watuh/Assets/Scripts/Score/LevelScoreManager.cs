@@ -107,7 +107,7 @@ public class LevelScoreManager : MonoBehaviour
 
         if (levelScore.HasValue)
         {
-            Debug.Log($"Level: {levelScore.Value.levelName}, Best Time: {levelScore.Value.bestTime}, Tries: {levelScore.Value.tries}");
+            //Debug.Log($"Level: {levelScore.Value.levelName}, Best Time: {levelScore.Value.bestTime}, Tries: {levelScore.Value.tries}");
         }
         else
         {

@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(CharacterController), typeof(PlayPlayerSound))]
 public class Movement : MonoBehaviour
 {
     [Header("Movement Settings")]
@@ -67,6 +67,7 @@ public class Movement : MonoBehaviour
     private bool _canDashInAir = true;
     private float _fallTime = 0f;
     private bool _fallingValue = false;
+    private PlayPlayerSound _sound;
 
     private bool _falling
     {
@@ -101,7 +102,7 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
-        Application.targetFrameRate = -1;
+        _sound = GetComponent<PlayPlayerSound>();
         _controller = GetComponent<CharacterController>();
     }
 
@@ -184,9 +185,6 @@ public class Movement : MonoBehaviour
             float gravityEffect = Mathf.Lerp(_startVelocityY, _maxFallForce, EasingFunctions.Ease(_fallEasingType, fallProgress));
 
             _velocityY = gravityEffect;
-
-            //float gravityEffect = _gravity * _gravityMultiplier * _fallTime * _fallTime * _fallingSpeedMulti;
-            //_velocityY = Mathf.Max(_velocityY + gravityEffect * Time.deltaTime, _maxFallForce);
         }
 
         _movement.y += _velocityY;
@@ -278,7 +276,7 @@ public class Movement : MonoBehaviour
             return;
 
         _canDashInAir = false;
-
+        _sound.PlayDash();
         StartCoroutine(StartDashing());
     }
 
@@ -292,6 +290,7 @@ public class Movement : MonoBehaviour
         if (Momentum < _minJumpMomentum)
             Momentum = _minJumpMomentum;
 
+        _sound.PlayJump();
         _startVelocityY = _jumpPower;
         _jumped = true;
         _fallTime = 0;
@@ -327,5 +326,3 @@ public class Movement : MonoBehaviour
         return Physics.Raycast(transform.position, Vector3.down, _groundCheckDistance);
     }
 }
-
-

@@ -15,6 +15,12 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu/LevelMenu.unity
     guid: 44cc502115ea1144086c4f944d8be326
   - enabled: 1
+    path: Assets/Scenes/MainMenu/MultiplayerScene.unity
+    guid: ca5a4df241f95a544b38c0abfb8adb8b
+  - enabled: 1
+    path: Assets/Scenes/MainMenu/LobbyScene.unity
+    guid: 2618b7b9549449045834ef81b9fda6dd
+  - enabled: 1
     path: Assets/Scenes/Level1-1.unity
     guid: 909a1b9b426ab5441b506b940b99db15
   - enabled: 1
@@ -35,10 +41,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level2-3.unity
     guid: ec3609f2d72efbd439a00de8b7e025ea
-  - enabled: 1
-    path: Assets/Scenes/MainMenu/LobbyScene.unity
-    guid: 2618b7b9549449045834ef81b9fda6dd
-  - enabled: 1
-    path: Assets/Scenes/MainMenu/MultiplayerScene.unity
-    guid: ca5a4df241f95a544b38c0abfb8adb8b
   m_configObjects: {}
