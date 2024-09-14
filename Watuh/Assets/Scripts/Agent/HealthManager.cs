@@ -13,10 +13,6 @@ public class HealthManager : MonoBehaviour
     private IDestroyable _destroyable;
     private ObjectInfo _objectInfo;
 
-    private NPCBehaviourStateManager _npcBehaviourIdleStatesManager;
-
-    [HideInInspector]
-    public bool IsHit;
 
     private void Awake()
     {
@@ -25,37 +21,23 @@ public class HealthManager : MonoBehaviour
         _objectInfo = GetComponent<ObjectInfo>();
     }
 
-    private void Start()
-    {
-        _npcBehaviourIdleStatesManager = GetComponent<NPCBehaviourStateManager>();
-    }
-
     public virtual void TakeDamage(float damage)
     {
-        StartCoroutine(IsTridentInside());
+        _health = Mathf.Max(0, _health - damage);
+        CheckDeath();
     }
 
     public virtual void Heal(float healAmount)
     {
         _health = Mathf.Min(_maxHealth, _health + healAmount);
+        CheckDeath();
     }
 
     private void CheckDeath()
     {
-        _destroyable.Destroy();
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.layer != 7 || IsHit) return;
-        _npcBehaviourIdleStatesManager.SetNewState(NPCBehaviourStates.GotHit, collision.gameObject);
-        IsHit = true;
-    }
-
-    private IEnumerator IsTridentInside()
-    {
-        yield return new WaitForSeconds(1f);
-        if(GetComponentInChildren<Trident>() != null) StartCoroutine(IsTridentInside());
-        else CheckDeath();
+        if (_health <= 0)
+        {
+            _destroyable.Destroy();
+        }        
     }
 }

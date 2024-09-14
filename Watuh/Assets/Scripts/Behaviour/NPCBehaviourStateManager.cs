@@ -19,6 +19,9 @@ public class NPCBehaviourStateManager : MonoBehaviour
 
     public EventHandler DoNewAttack;
 
+    [HideInInspector]
+    public bool LockState = false;
+
     private void Start()
     {
         _states = GetComponents<INPCBehaviourStatesTypeManager>().ToList();
@@ -28,6 +31,12 @@ public class NPCBehaviourStateManager : MonoBehaviour
 
     public void SetNewState(NPCBehaviourStates newState, object data = null)
     {
+        if (LockState)
+        {
+            Debug.Log($"{this} is locked and the state can't be changed to {newState}.");
+            return;
+        }
+
         foreach (INPCBehaviourStatesTypeManager state in _states)
         {
             if (state.StateType == newState)

@@ -23,6 +23,8 @@ public class NPCGotHitState : MonoBehaviour, INPCBehaviourState
     public int Weight => _weight;
     public string[] AnimationNames => _animationNames;
     public NPCBehaviourStateManager StateManager { get => _stateManager; }
+
+    private GameObject _trident;
     public bool IsActive
     {
         get => _isActive;
@@ -41,26 +43,42 @@ public class NPCGotHitState : MonoBehaviour, INPCBehaviourState
     public void EndState(object data = null)
     {
         StopAllCoroutines();
+        _stateManager.LockState = false;
         IsActive = false;
     }
 
     public void StartState(object data = null)
     {
-        Debug.Log("StartedState");
         IsActive = true;
-        GameObject tridentGO = data as GameObject;
-        if (tridentGO == null) return;
-        Trident trident = tridentGO.GetComponent<Trident>();
+        _stateManager.LockState = true;
+
+        _trident = data as GameObject;
+        if (_trident == null)
+        {
+            Debug.LogWarning("Trident not given as data for state switch!");
+            _stateManager.LockState = false;
+            _stateManager.SetNewState(NPCBehaviourStates.Idle);
+            return;
+        }
+        Trident trident = _trident.GetComponent<Trident>();
+
+        if (trident == null)
+        {
+            Debug.LogWarning($"Trident component not found on {_trident}!");
+            _stateManager.LockState = false;
+            _stateManager.SetNewState(NPCBehaviourStates.Idle);
+            return;
+        }
 
         Vector3 toPos;
         if (trident.IsTrown)
         {
-            toPos = GetDestination(tridentGO, _trowstrength, true);
+            toPos = GetDestination(_trident, _trowstrength, true);
             StartCoroutine(LerpToPos(transform.position, toPos, this.gameObject, false, _trowstrength / 2));
         }
         else
         {
-            toPos = GetDestination(tridentGO, _stabStrength, false);
+            toPos = GetDestination(_trident, _stabStrength, false);
             StartCoroutine(LerpToPos(transform.position, toPos, this.gameObject, false, _stabStrength / 2));
         }
     }
@@ -81,6 +99,7 @@ public class NPCGotHitState : MonoBehaviour, INPCBehaviourState
     }
     private IEnumerator LerpToPos(Vector3 startpos, Vector3 toPos, GameObject MoveObject, bool moveLocal, float timer)
     {
+        StartCoroutine(IsTridentInside());
         float time = 0;
         while (time < timer - 2f)
         {
@@ -90,7 +109,15 @@ public class NPCGotHitState : MonoBehaviour, INPCBehaviourState
             else MoveObject.transform.position = newPos;
             yield return null;
         }
-        GetComponent<HealthManager>().TakeDamage(1);
         EndState();
+    }
+
+    private IEnumerator IsTridentInside()
+    {
+        while (_trident.transform.root == transform)
+        {
+            yield return new WaitForSeconds(0.3f);
+        }
+        GetComponent<IDestroyable>().Destroy();
     }
 }

@@ -12,13 +12,14 @@ public class Trident : MonoBehaviour
     [Header("Stats")]
     [SerializeField] private float _momentumMultiplier;
     [SerializeField] private float _trowStrength;
+    [SerializeField] private float _minThrowStrength = 800;
     [SerializeField] private float _stabLength;
     [SerializeField] private float _retrievSpeed;
     [SerializeField] private int _teleportLayer;
     [SerializeField] private float _dashCooldown;
 
     private GameObject _player;
-    private float _playerMomentum;
+    private Movement _playerMomentum;
     private Rigidbody _rb;
 
     [HideInInspector]
@@ -31,22 +32,22 @@ public class Trident : MonoBehaviour
 
     private void Start()
     {
-        Movement movement = FindObjectOfType<Movement>();
-        _player = movement.gameObject;
-        _playerMomentum = movement.Momentum;
+        _playerMomentum = transform.root.GetComponent<Movement>();
+        _player = _playerMomentum.gameObject;
 
         _rb = GetComponent<Rigidbody>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 3) return;
+        if (!IsTrown || other.gameObject.layer == 3) return;
         _rb.isKinematic = true;
         if (other.gameObject.layer == 9)
         {
-            if (!other.gameObject.GetComponent<HealthManager>().IsHit)
+            if (!other.gameObject.GetComponent<NPCGotHitState>().IsActive)
             {
                 transform.parent = other.transform;
+                other.gameObject.GetComponent<NPCBehaviourStateManager>().SetNewState(NPCBehaviourStates.GotHit, gameObject);
                 _rb.velocity = Vector3.zero;
                 _canTeleport = true;
             }
@@ -82,7 +83,7 @@ public class Trident : MonoBehaviour
         }
         _rb.isKinematic = false;
         transform.parent = null;
-        _rb.AddForce(transform.forward * (_trowStrength + _playerMomentum));
+        _rb.AddForce((_minThrowStrength + (_trowStrength * _playerMomentum.Momentum)) * transform.forward);
         IsTrown = true;
 
     }
@@ -98,7 +99,6 @@ public class Trident : MonoBehaviour
 
     private void RetrieveTrident()
     {
-        float timer = 0;
         _rb.isKinematic = false;
         transform.parent = null;
         if (_taskManager == null || !_taskManager.Running)

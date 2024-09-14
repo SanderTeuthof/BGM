@@ -164,6 +164,7 @@ MonoBehaviour:
   _dashMomentumMultiplier: 1.5
   _dashMomentumTakeOver: 0.768
   _dashTime: 0.3
+  _dashStrength: 1.1
   _fallMomentumBuild: 0.3
   _maxFallTime: 0.76
   _maxFallForce: -3.14
@@ -462,6 +463,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490756132696323117, guid: f91aa089fb9db0c48a0e8ebbe4dffc2b,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9183796518181403432, guid: f91aa089fb9db0c48a0e8ebbe4dffc2b,
+        type: 3}
+      propertyPath: _dashCooldown
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9183796518181403432, guid: f91aa089fb9db0c48a0e8ebbe4dffc2b,
+        type: 3}
+      propertyPath: _trowStrength
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
