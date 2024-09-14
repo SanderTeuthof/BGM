@@ -16,10 +16,6 @@ using UnityEngine.InputSystem;
 
 public class Leaderboarding : MonoBehaviour
 {
-    //[SerializeField]
-    //private List<TextMeshProUGUI> names;
-    //[SerializeField]
-    //private List<TextMeshProUGUI> scores;
 
     [SerializeField]
     private float scoreChange;
@@ -38,9 +34,6 @@ public class Leaderboarding : MonoBehaviour
             Debug.Log("Signed in " + AuthenticationService.Instance.PlayerId);
         };
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
-        // Debug.Log(PlayerAccountService.Instance.AccessToken);
-        //  AuthenticationService.Instance.SignInWithUnityAsync(PlayerAccountService.Instance.AccessToken);
-        //await AuthenticationService.Instance.LinkWithUnityAsync(PlayerAccountService.Instance.AccessToken);
     }
 
     public async void AddScore()
@@ -98,11 +91,7 @@ public class Leaderboarding : MonoBehaviour
 
     public async void GetPaginatedScores()
     {
-        var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync(
-            "TestLeaaderBoardd",
-            new GetScoresOptions { Offset = 0, Limit = 50 }
-        );
+        var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync("TestLeaaderBoardd",new GetScoresOptions { Offset = 0, Limit = 50 });
         Debug.Log(JsonConvert.SerializeObject(scoresResponse));
-       // Debug.Log(scoresResponse.Results[0]);
     }
 }

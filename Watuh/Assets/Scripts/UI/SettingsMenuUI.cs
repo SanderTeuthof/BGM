@@ -1,12 +1,21 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SettingsMenuUI : MonoBehaviour
 {
     [SerializeField]
     private GameObject _settings;
-    
-    public void SettingsClicked()
+
+    private void Awake()
     {
+        _settings.SetActive(false);
+    }
+
+    public void SettingsClicked(InputAction.CallbackContext ctx)
+    {
+        if (!ctx.performed)
+            return;
+
         bool newSet = _settings.activeSelf;
         _settings.SetActive(!newSet);
         if (newSet)
