@@ -29,6 +29,7 @@ public class LeaderboardCommunicator : MonoBehaviour
 
     public async void Awake()
     {
+
         _playerData = ScoreDataLoader.LoadPlayerScoreData();
 
         InitializationOptions options = new InitializationOptions();
@@ -37,11 +38,15 @@ public class LeaderboardCommunicator : MonoBehaviour
         await UnityServices.InitializeAsync(options);
 
 
-        AuthenticationService.Instance.SignedIn += () =>
+        if (AuthenticationService.Instance == null || !AuthenticationService.Instance.IsSignedIn)
         {
-            Debug.Log("Signed in " + AuthenticationService.Instance.PlayerId);
-        };
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            AuthenticationService.Instance.SignedIn += () =>
+            {
+                Debug.Log("Signed in " + AuthenticationService.Instance.PlayerId);
+            };
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        }
+        
 
         _signedIn = true;
 
@@ -54,7 +59,6 @@ public class LeaderboardCommunicator : MonoBehaviour
     {
         if (_playerData.levelScores.Count == _numberOfLevels)
         {
-            Debug.Log(_playerData.levelScores.Count);
             PlayerScoreData player = ScoreDataLoader.LoadPlayerScoreData();
             await AuthenticationService.Instance.UpdatePlayerNameAsync(player.playerName);
             var playerEntry = await LeaderboardsService.Instance.AddPlayerScoreAsync("TestLeaaderBoardd", _playerData.TotalTime());
@@ -75,7 +79,7 @@ public class LeaderboardCommunicator : MonoBehaviour
                 for (int i = 0; i < scoresResponse.Results.Count; i++)
                 {
                     var score = scoresResponse.Results[i];
-                    TimeSpan time = TimeSpan.FromSeconds(score.Score); 
+                    TimeSpan time = TimeSpan.FromSeconds(score.Score);
                     string formattedTime = string.Format("{0:D2}:{1:D2}:{2:D2}", time.Minutes, time.Seconds, time.Milliseconds / 10);
                     string playerName = score.PlayerName.Split("#")[0];
                     playerName = playerName.Length > 12 ? playerName.Substring(0, 12) + ".." : playerName;

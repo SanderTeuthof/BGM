@@ -91,6 +91,9 @@ public class NPCBasicShoot : MonoBehaviour, INPCAttackState
             yield return null; 
         }
 
+        float timeShoot = _timeBeforeShoot;
+        float Random = UnityEngine.Random.Range(_timeBeforeShoot * 0.8f, _timeBeforeShoot * 1.2f);
+
         yield return new WaitForSeconds(_timeBeforeShoot);
         _stateManager.AnimationHanler.SetAnimationBool(_animationNames[1], true);
 

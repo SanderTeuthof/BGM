@@ -358,7 +358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd53aa36b7a44f248912dccd5cf7ea43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _menuScenesIndex: 0100000002000000030000000400000000000000
+  _menuScenesIndex: 000000000100000002000000
   _menuMusic: {fileID: 8300000, guid: e3390159d73d1ef4fa26ee221ed5d5a0, type: 3}
   _gameMusic: {fileID: 8300000, guid: ec2775675600a2e48b675ad11fb6f810, type: 3}
   _musicVolume:
