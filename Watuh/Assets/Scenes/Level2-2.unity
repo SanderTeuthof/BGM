@@ -3909,7 +3909,7 @@ PrefabInstance:
     - target: {fileID: 6575874384473242628, guid: 259b7aba14615644895a947f7314f6f5,
         type: 3}
       propertyPath: _timeToRise
-      value: 15
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6575874384473242628, guid: 259b7aba14615644895a947f7314f6f5,
         type: 3}
@@ -3919,7 +3919,7 @@ PrefabInstance:
     - target: {fileID: 6575874384473242628, guid: 259b7aba14615644895a947f7314f6f5,
         type: 3}
       propertyPath: _bufferTimeBeforeRise
-      value: 4
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6908757146027507681, guid: 259b7aba14615644895a947f7314f6f5,
         type: 3}
