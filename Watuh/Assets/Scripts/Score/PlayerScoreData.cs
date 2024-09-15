@@ -11,4 +11,14 @@ public class PlayerScoreData
         this.playerName = playerName;
         this.levelScores = levelScores;
     }
+
+    public float TotalTime()
+    {
+        float time = 0;
+
+        foreach (var levelScore in levelScores)
+            time += levelScore.bestTime;
+
+        return time;
+    }
 }
